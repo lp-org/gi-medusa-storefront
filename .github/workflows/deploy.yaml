@@ -20,7 +20,7 @@ jobs:
         run: npm ci
 
       - name: Build project
-        run: export NEXT_PUBLIC_MEDUSA_BACKEND_URL=https://api.grin-global.com && npm run build
+        run: export NEXT_PUBLIC_MEDUSA_BACKEND_URL=https://api.grin-global.com NEXT_PUBLIC_STRIPE_KEY=pk_test_51Mqt7xGISh5nOPlaHUf5nx7dIgoSl5KjOMBk7QzU8QklLw1J6letxDUYg5yFFxbAWWnM9jDIqQpoADEaAz7Hyj5M00UNBtglmt && npm run build
 
       - name: Sync files via rsync
         uses: burnett01/rsync-deployments@6.0.0
