@@ -5,8 +5,10 @@ import Link from "next/link"
 import CheckoutLoader from "../components/checkout-loader"
 import CheckoutForm from "./checkout-form"
 import CheckoutSummary from "./checkout-summary"
+import { useAppStore } from "store"
 
 const CheckoutTemplate = () => {
+  const storeContent = useAppStore((state) => state.storeContent)
   return (
     <CheckoutProvider>
       <div className="bg-gray-100 relative small:min-h-screen">
@@ -22,7 +24,7 @@ const CheckoutTemplate = () => {
               </a>
             </Link>
             <Link href="/">
-              <a className="text-xl-semi">ACME</a>
+              <a className="text-xl-semi">{storeContent?.name}</a>
             </Link>
             <div className="flex-1 basis-0" />
           </nav>

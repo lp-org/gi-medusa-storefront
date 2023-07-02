@@ -5,8 +5,10 @@ import ChevronDown from "@modules/common/icons/chevron-down"
 import Search from "@modules/common/icons/search"
 import X from "@modules/common/icons/x"
 import { useCollections, useMeCustomer } from "medusa-react"
+import Image from "next/image"
 import Link from "next/link"
 import ReactCountryFlag from "react-country-flag"
+import { useAppStore } from "store"
 
 const MainMenu = () => {
   const { collections } = useCollections()
@@ -22,7 +24,7 @@ const MainMenu = () => {
 
   const setScreenCountry = () => setScreen("country")
   const setScreenSearch = () => setScreen("search")
-
+  const storeContent = useAppStore((state) => state.storeContent)
   return (
     <div className="flex flex-col flex-1">
       <div className="flex items-center justify-between w-full border-b border-gray-200 py-4 px-6">
@@ -36,7 +38,15 @@ const MainMenu = () => {
           </button>
         </div>
         <div>
-          <h1 className="text-xl-semi uppercase">Acme</h1>
+          <h1 className="text-xl-semi uppercase">
+            {" "}
+            <Image
+              src={storeContent?.logo || "/logo.png"}
+              width={200}
+              height={200}
+              alt="logo"
+            />
+          </h1>
         </div>
         <div className="flex-1 basis-0 flex justify-end">
           <button onClick={close}>

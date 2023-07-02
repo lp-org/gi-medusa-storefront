@@ -1,6 +1,7 @@
 import { Listbox, Transition } from "@headlessui/react"
 import { useStore } from "@lib/context/store-context"
 import useToggleState from "@lib/hooks/use-toggle-state"
+import { useQuery } from "@tanstack/react-query"
 import { useRegions } from "medusa-react"
 import { Fragment, useEffect, useMemo, useState } from "react"
 import ReactCountryFlag from "react-country-flag"
@@ -35,7 +36,23 @@ const CountrySelect = () => {
       setCurrent(option)
     }
   }, [countryCode, options])
-
+  const { data: detectedCountryCode } = useQuery({
+    queryFn: async () => {
+      const ipData = await (await fetch("http://ip-api.com/json")).json()
+      const { countryCode } = ipData
+      return countryCode
+    },
+  })
+  useEffect(() => {
+    if (detectedCountryCode) {
+      const option = options?.find(
+        (el) => el.country == detectedCountryCode.toLowerCase()
+      )
+      if (option) {
+        setRegion(option.region, option.country)
+      }
+    }
+  }, [detectedCountryCode, options])
   const handleChange = (option: CountryOption) => {
     setRegion(option.region, option.country)
     close()

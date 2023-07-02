@@ -7,10 +7,10 @@ import { NextPageWithLayout } from "types/global"
 
 const Account: NextPageWithLayout = () => {
   return (
-    <>
+    <AccountLayout>
       <Head title="Account" description="Overview of your account activity." />
       <OverviewTemplate />
-    </>
+    </AccountLayout>
   )
 }
 

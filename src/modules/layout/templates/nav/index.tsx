@@ -5,11 +5,13 @@ import DropdownMenu from "@modules/layout/components/dropdown-menu"
 import MobileMenu from "@modules/mobile-menu/templates"
 import DesktopSearchModal from "@modules/search/templates/desktop-search-modal"
 import clsx from "clsx"
+import Image from "next/image"
 import Link from "next/link"
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
+import { StoreContent } from "types/global"
 
-const Nav = () => {
+const Nav = ({ storeContent }: { storeContent: StoreContent }) => {
   const { pathname } = useRouter()
   const [isHome, setIsHome] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
@@ -49,7 +51,7 @@ const Nav = () => {
         className={clsx(
           "relative h-16 px-8 mx-auto transition-colors bg-transparent border-b border-transparent duration-200 group-hover:bg-white group-hover:border-gray-200",
           {
-            "!bg-white !border-gray-200": !isHome || isScrolled,
+            "!bg-white !border-cyan-200": !isHome || isScrolled,
           }
         )}
       >
@@ -72,7 +74,14 @@ const Nav = () => {
 
           <div className="flex items-center h-full">
             <Link href="/">
-              <a className="text-xl-semi uppercase">Acme</a>
+              <a className="text-xl-semi uppercase">
+                <Image
+                  src={storeContent?.logo || "/logo.png"}
+                  width={150}
+                  height={150}
+                  alt="logo"
+                />
+              </a>
             </Link>
           </div>
 

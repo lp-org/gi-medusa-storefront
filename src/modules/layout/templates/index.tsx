@@ -1,13 +1,18 @@
 import Footer from "@modules/layout/templates/footer"
 import Nav from "@modules/layout/templates/nav"
 import React from "react"
+import { StoreContent } from "types/global"
 
-const Layout: React.FC = ({ children }) => {
+const Layout: React.FC<{
+  children: React.ReactNode
+  storeContent: StoreContent
+}> = ({ children, storeContent }) => {
   return (
     <div>
-      <Nav />
+      <Nav storeContent={storeContent} />
+
       <main className="relative">{children}</main>
-      <Footer />
+      <Footer storeContent={storeContent} />
     </div>
   )
 }

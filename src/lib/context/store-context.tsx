@@ -214,6 +214,7 @@ export const StoreProvider = ({ children }: StoreProps) => {
         }
 
         setCart(cartRes)
+
         ensureRegion(cartRes.region)
       } else {
         await createNewCart(region?.regionId)

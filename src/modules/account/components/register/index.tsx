@@ -7,6 +7,7 @@ import Link from "next/link"
 import { useRouter } from "next/router"
 import { useState } from "react"
 import { FieldValues, useForm } from "react-hook-form"
+import { useAppStore } from "store"
 
 interface RegisterCredentials extends FieldValues {
   first_name: string
@@ -21,7 +22,7 @@ const Register = () => {
   const [_, setCurrentView] = loginView
   const [authError, setAuthError] = useState<string | undefined>(undefined)
   const router = useRouter()
-
+  const storeContent = useAppStore((state) => state.storeContent)
   const handleError = (e: Error) => {
     setAuthError("An error occured. Please try again.")
   }
@@ -49,10 +50,12 @@ const Register = () => {
           <Spinner size={24} />
         </div>
       )}
-      <h1 className="text-large-semi uppercase mb-6">Become a Acme Member</h1>
+      <h1 className="text-large-semi uppercase mb-6">
+        Become a {storeContent?.name} Member
+      </h1>
       <p className="text-center text-base-regular text-gray-700 mb-4">
-        Create your Acme Member profile, and get access to an enhanced shopping
-        experience.
+        Create your {storeContent?.name} Member profile, and get access to an
+        enhanced shopping experience.
       </p>
       <form className="w-full flex flex-col" onSubmit={onSubmit}>
         <div className="flex flex-col w-full gap-y-2">
@@ -98,7 +101,7 @@ const Register = () => {
           </div>
         )}
         <span className="text-center text-gray-700 text-small-regular mt-6">
-          By creating an account, you agree to Acme&apos;s{" "}
+          By creating an account, you agree to {storeContent?.name}&apos;s{" "}
           <Link href="/content/privacy-policy">
             <a className="underline">Privacy Policy</a>
           </Link>{" "}

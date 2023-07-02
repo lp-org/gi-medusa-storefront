@@ -11,7 +11,4 @@ const HowToUse = () => {
   )
 }
 
-HowToUse.getLayout = (page: ReactElement) => {
-  return <Layout>{page}</Layout>
-}
 export default HowToUse

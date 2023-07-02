@@ -8,7 +8,9 @@ const Orders: NextPageWithLayout = () => {
   return (
     <>
       <Head title="Orders" description="Overview of your previous orders." />
-      <OrdersTemplate />
+      <AccountLayout>
+        <OrdersTemplate />
+      </AccountLayout>
     </>
   )
 }

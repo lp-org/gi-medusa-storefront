@@ -1,5 +1,6 @@
 import NextHead from "next/head"
 import React from "react"
+import { useAppStore } from "store"
 
 type HeadProps = {
   title?: string
@@ -8,9 +9,12 @@ type HeadProps = {
 }
 
 const Head: React.FC<HeadProps> = ({ title, description, image }) => {
+  const storeContent = useAppStore((state) => state.storeContent)
   return (
     <NextHead>
-      <title>{title} | ACME</title>
+      <title>
+        {title} |{storeContent.name}
+      </title>
       <meta itemProp="name" content={title} />
       {description && <meta itemProp="description" content={description} />}
       {image && <meta itemProp="image" content={image} />}

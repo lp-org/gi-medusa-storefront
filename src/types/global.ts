@@ -67,3 +67,21 @@ export type InfiniteProductPage = {
     count: number
   }
 }
+
+export type SliderType = {
+  image: string
+  description?: string
+  is_active: boolean
+  open_new: boolean
+}
+
+export type StoreContent = {
+  name: string
+  facebook_url: string
+  instagram_url: string
+  phone_no: string
+  email: string
+  address: string
+  logo: string
+  slider: SliderType[]
+}

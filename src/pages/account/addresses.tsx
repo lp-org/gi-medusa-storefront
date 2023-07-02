@@ -9,7 +9,9 @@ const Addresses: NextPageWithLayout = () => {
   return (
     <>
       <Head title="Addresses" description="View your addresses" />
-      <AddressesTemplate />
+      <AccountLayout>
+        <AddressesTemplate />
+      </AccountLayout>
     </>
   )
 }
