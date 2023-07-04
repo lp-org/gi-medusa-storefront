@@ -9,13 +9,13 @@ import Image from "next/image"
 import Link from "next/link"
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
-import { StoreContent } from "types/global"
+import { useAppStore } from "store"
 
-const Nav = ({ storeContent }: { storeContent: StoreContent }) => {
+const Nav = () => {
   const { pathname } = useRouter()
   const [isHome, setIsHome] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
-
+  const storeContent = useAppStore((state) => state.storeContent)
   //useEffect that detects if window is scrolled > 5px on the Y axis
   useEffect(() => {
     if (isHome) {

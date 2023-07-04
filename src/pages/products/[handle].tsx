@@ -67,10 +67,6 @@ const ProductPage: NextPageWithLayout<PrefetchedPageProps> = ({ notFound }) => {
   return <></>
 }
 
-ProductPage.getLayout = (page: ReactElement) => {
-  return <Layout>{page}</Layout>
-}
-
 export const getStaticPaths: GetStaticPaths<Params> = async () => {
   const handles = await getProductHandles()
   return {
