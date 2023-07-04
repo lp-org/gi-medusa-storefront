@@ -7,6 +7,12 @@ const api = {
       return medusaRequest("GET", path)
     },
   },
+  pages: {
+    get(handle: string) {
+      const path = `/store/pages/${handle}`
+      return medusaRequest("GET", path)
+    },
+  },
 }
 
 export default api

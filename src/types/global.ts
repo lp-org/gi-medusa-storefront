@@ -84,4 +84,14 @@ export type StoreContent = {
   address: string
   logo: string
   slider: SliderType[]
+  pages: PagesType[]
+}
+
+export interface PagesType {
+  id: string
+  title: string
+  handle: string
+  description: string
+  body: string
+  publish: boolean
 }

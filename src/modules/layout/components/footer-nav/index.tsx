@@ -5,7 +5,7 @@ import CountrySelect from "../country-select"
 import { StoreContent } from "types/global"
 import { useAppStore } from "store"
 import dayjs from "dayjs"
-
+import { Instagram, Facebook } from "lucide-react"
 const FooterNav = () => {
   const { collections } = useCollections()
   const storeContent = useAppStore((state) => state.storeContent)
@@ -17,6 +17,23 @@ const FooterNav = () => {
           <Link href="/">
             <a className="text-xl-semi uppercase">{storeContent?.name}</a>
           </Link>
+          <div className="flex flex-row gap-4 mt-4">
+            {storeContent?.instagram_url && (
+              <Link href={storeContent.instagram_url} passHref>
+                <a target="_blank">
+                  <Instagram className="cursor-pointer text-cyan-600" />
+                </a>
+              </Link>
+            )}
+
+            {storeContent?.facebook_url && (
+              <Link href={storeContent.facebook_url} passHref>
+                <a target="_blank">
+                  <Facebook className="cursor-pointer text-cyan-600" />
+                </a>
+              </Link>
+            )}
+          </div>
         </div>
         <div className="text-small-regular grid grid-cols-2 gap-x-16">
           <div className="flex flex-col gap-y-2">
@@ -35,38 +52,16 @@ const FooterNav = () => {
               ))}
             </ul>
           </div>
-          {/* <div className="flex flex-col gap-y-2">
-            <span className="text-base-semi">Medusa</span>
+          <div className="flex flex-col gap-y-2">
+            <span className="text-base-semi">Support</span>
             <ul className="grid grid-cols-1 gap-y-2">
-              <li>
-                <a
-                  href="https://github.com/medusajs"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  GitHub
-                </a>
-              </li>
-              <li>
-                <a
-                  href="https://docs.medusajs.com"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  Documentation
-                </a>
-              </li>
-              <li>
-                <a
-                  href="https://github.com/medusajs/nextjs-starter-medusa"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  Source code
-                </a>
-              </li>
+              {storeContent?.pages.map((el) => (
+                <li key={el.id}>
+                  <a href={`/${el.handle}`}>{el.title}</a>
+                </li>
+              ))}
             </ul>
-          </div> */}
+          </div>
         </div>
       </div>
       <div className="flex flex-col-reverse gap-y-4 justify-center xsmall:items-center xsmall:flex-row xsmall:items-end xsmall:justify-between">
