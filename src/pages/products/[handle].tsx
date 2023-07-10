@@ -79,11 +79,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
   const handle = context.params?.handle as string
   const queryClient = new QueryClient()
 
-  await queryClient.prefetchQuery([`get_product`, handle], () =>
-    fetchProduct(handle)
-  )
-
-  const queryData = await queryClient.getQueryData([`get_product`, handle])
+  const queryData = await fetchProduct(handle)
 
   if (!queryData) {
     return {

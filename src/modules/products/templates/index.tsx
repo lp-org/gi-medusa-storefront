@@ -22,10 +22,10 @@ const ProductTemplate: React.FC<ProductTemplateProps> = ({ product }) => {
     <ProductProvider product={product}>
       <div className="content-container flex flex-col small:flex-row small:items-start py-6 relative">
         <div className="flex flex-col gap-y-8 w-full">
-          <ImageGallery images={(product?.images || [])} />
+          <ImageGallery images={product?.images || []} />
         </div>
         <div
-          className="small:sticky small:top-20 w-full py-8 small:py-0 small:max-w-[344px] medium:max-w-[400px] flex flex-col gap-y-12"
+          className="small:sticky small:top-20 w-full py-8 small:py-0 small:max-w-[344px] medium:max-w-[600px] flex flex-col gap-y-12"
           ref={info}
         >
           <ProductInfo product={product} />

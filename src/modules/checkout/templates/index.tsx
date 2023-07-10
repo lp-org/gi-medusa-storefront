@@ -14,17 +14,19 @@ const CheckoutTemplate = () => {
       <div className="bg-gray-100 relative small:min-h-screen">
         <div className="h-16 bg-white">
           <nav className="flex items-center h-full justify-between content-container">
-            <Link href="/cart">
-              <a className="text-small-semi text-gray-700 flex items-center gap-x-2 uppercase flex-1 basis-0">
-                <ChevronDown className="rotate-90" size={16} />
-                <span className="mt-px hidden small:block">
-                  Back to shopping cart
-                </span>
-                <span className="mt-px block small:hidden">Back</span>
-              </a>
+            <Link
+              href="/cart"
+              className="text-small-semi text-gray-700 flex items-center gap-x-2 uppercase flex-1 basis-0">
+
+              <ChevronDown className="rotate-90" size={16} />
+              <span className="mt-px hidden small:block">
+                Back to shopping cart
+              </span>
+              <span className="mt-px block small:hidden">Back</span>
+
             </Link>
-            <Link href="/">
-              <a className="text-xl-semi">{storeContent?.name}</a>
+            <Link href="/" className="text-xl-semi">
+              {storeContent?.name}
             </Link>
             <div className="flex-1 basis-0" />
           </nav>
@@ -41,7 +43,7 @@ const CheckoutTemplate = () => {
         </div>
       </div>
     </CheckoutProvider>
-  )
+  );
 }
 
 export default CheckoutTemplate

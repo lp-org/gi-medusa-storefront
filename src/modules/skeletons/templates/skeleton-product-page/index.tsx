@@ -25,7 +25,7 @@ const SkeletonProductPage = () => {
             </div>
           </div>
         </div>
-        <div className="small:sticky small:top-20 w-full py-8 small:py-0 small:max-w-[344px] medium:max-w-[400px] flex flex-col gap-y-12">
+        <div className="small:sticky small:top-20 w-full py-8 small:py-0 small:max-w-[344px] medium:max-w-[600px] flex flex-col gap-y-12">
           <div>
             <div className="flex flex-col gap-y-12 lg:max-w-[500px] mx-auto">
               <div>

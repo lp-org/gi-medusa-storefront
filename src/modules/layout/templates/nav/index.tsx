@@ -35,9 +35,9 @@ const Nav = () => {
     }
   }, [isHome])
 
-  useEffect(() => {
-    pathname === "/" ? setIsHome(true) : setIsHome(false)
-  }, [pathname])
+  // useEffect(() => {
+  //   pathname === "/" ? setIsHome(true) : setIsHome(false)
+  // }, [pathname])
 
   const { toggle } = useMobileMenu()
 
@@ -73,24 +73,20 @@ const Nav = () => {
           </div>
 
           <div className="flex items-center h-full">
-            <Link href="/">
-              <a className="text-xl-semi uppercase">
-                <Image
-                  src={storeContent?.logo || "/logo.png"}
-                  width={150}
-                  height={150}
-                  alt="logo"
-                />
-              </a>
+            <Link href="/" className="text-xl-semi uppercase" passHref>
+              <Image
+                src={storeContent?.logo || "/logo.png"}
+                width={150}
+                height={150}
+                alt="logo"
+              />
             </Link>
           </div>
 
           <div className="flex items-center gap-x-6 h-full flex-1 basis-0 justify-end">
             <div className="hidden small:flex items-center gap-x-6 h-full">
               {process.env.FEATURE_SEARCH_ENABLED && <DesktopSearchModal />}
-              <Link href="/account">
-                <a>Account</a>
-              </Link>
+              <Link href="/account">Account</Link>
             </div>
             <CartDropdown />
           </div>

@@ -102,12 +102,12 @@ const Register = () => {
         )}
         <span className="text-center text-gray-700 text-small-regular mt-6">
           By creating an account, you agree to {storeContent?.name}&apos;s{" "}
-          <Link href="/content/privacy-policy">
-            <a className="underline">Privacy Policy</a>
+          <Link href="/content/privacy-policy" className="underline">
+            Privacy Policy
           </Link>{" "}
           and{" "}
-          <Link href="/content/terms-of-use">
-            <a className="underline">Terms of Use</a>
+          <Link href="/content/terms-of-use" className="underline">
+            Terms of Use
           </Link>
           .
         </span>
@@ -124,7 +124,7 @@ const Register = () => {
         .
       </span>
     </div>
-  )
+  );
 }
 
 export default Register

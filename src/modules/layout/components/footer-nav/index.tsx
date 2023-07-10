@@ -5,7 +5,7 @@ import CountrySelect from "../country-select"
 import { StoreContent } from "types/global"
 import { useAppStore } from "store"
 import dayjs from "dayjs"
-import { Instagram, Facebook } from "lucide-react"
+import { Instagram, Facebook, LocateIcon, Mail, Phone } from "lucide-react"
 const FooterNav = () => {
   const { collections } = useCollections()
   const storeContent = useAppStore((state) => state.storeContent)
@@ -14,23 +14,46 @@ const FooterNav = () => {
     <div className="content-container flex flex-col gap-y-8 pt-16 pb-8">
       <div className="flex flex-col gap-y-6 xsmall:flex-row items-start justify-between">
         <div>
-          <Link href="/">
-            <a className="text-xl-semi uppercase">{storeContent?.name}</a>
+          <Link href="/" className="text-xl-semi uppercase">
+            {storeContent?.name}
           </Link>
+
+          <div className="flex flex-col gap-4 mt-4">
+            {storeContent?.address && (
+              <div className="flex flex-row">
+                <LocateIcon className="text-cyan-600" />
+                <span className="ml-2 font-medium">
+                  {storeContent?.address}
+                </span>
+              </div>
+            )}
+
+            {storeContent?.email && (
+              <div className="flex flex-row">
+                <Mail className="text-cyan-600" />
+                <span className="ml-2 font-medium">{storeContent?.email}</span>
+              </div>
+            )}
+
+            {storeContent?.phone_no && (
+              <div className="flex flex-row">
+                <Phone className="text-cyan-600" />
+                <span className="ml-2 font-medium">
+                  {storeContent?.phone_no}
+                </span>
+              </div>
+            )}
+          </div>
           <div className="flex flex-row gap-4 mt-4">
             {storeContent?.instagram_url && (
-              <Link href={storeContent.instagram_url} passHref>
-                <a target="_blank">
-                  <Instagram className="cursor-pointer text-cyan-600" />
-                </a>
+              <Link href={storeContent.instagram_url} passHref target="_blank">
+                <Instagram className="cursor-pointer text-cyan-600" />
               </Link>
             )}
 
             {storeContent?.facebook_url && (
-              <Link href={storeContent.facebook_url} passHref>
-                <a target="_blank">
-                  <Facebook className="cursor-pointer text-cyan-600" />
-                </a>
+              <Link href={storeContent.facebook_url} passHref target="_blank">
+                <Facebook className="cursor-pointer text-cyan-600" />
               </Link>
             )}
           </div>
@@ -45,9 +68,7 @@ const FooterNav = () => {
             >
               {collections?.map((c) => (
                 <li key={c.id}>
-                  <Link href={`/collections/${c.id}`}>
-                    <a>{c.title}</a>
-                  </Link>
+                  <Link href={`/collections/${c.id}`}>{c.title}</Link>
                 </li>
               ))}
             </ul>
