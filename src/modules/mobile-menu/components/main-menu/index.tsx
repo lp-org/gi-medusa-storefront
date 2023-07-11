@@ -42,7 +42,7 @@ const MainMenu = () => {
             {" "}
             <Image
               src={storeContent?.logo || "/logo.png"}
-              width={150}
+              width={100}
               height={100}
               alt="logo"
             />
@@ -72,7 +72,6 @@ const MainMenu = () => {
           <ul className="flex flex-col gap-y-2">
             <li className="bg-gray-50 p-4">
               <Link href="/store">
-
                 <button
                   className="flex items-center justify-between w-full"
                   onClick={close}
@@ -81,7 +80,6 @@ const MainMenu = () => {
                   <span>Store</span>
                   <ChevronDown className="-rotate-90" />
                 </button>
-
               </Link>
             </li>
             {collections ? (
@@ -89,7 +87,6 @@ const MainMenu = () => {
                 {collections.map((collection) => (
                   <li key={collection.id} className="bg-gray-50 p-4">
                     <Link href={`/collections/${collection.id}`}>
-
                       <button
                         className="flex items-center justify-between w-full"
                         onClick={close}
@@ -100,7 +97,6 @@ const MainMenu = () => {
                         <span>{collection.title}</span>
                         <ChevronDown className="-rotate-90" />
                       </button>
-
                     </Link>
                   </li>
                 ))}
@@ -115,7 +111,6 @@ const MainMenu = () => {
               <div className="flex flex-col gap-y-4">
                 <span className="text-gray-700 uppercase">Account</span>
                 <Link href={`/account/login`} passHref>
-
                   <button
                     className="flex items-center justify-between border-b border-gray-200 py-2 w-full"
                     onClick={close}
@@ -124,14 +119,12 @@ const MainMenu = () => {
                     <span className="normal-case">Sign in</span>
                     <ChevronDown className="-rotate-90" />
                   </button>
-
                 </Link>
               </div>
             ) : (
               <div className="flex flex-col gap-y-4">
                 <span className="text-gray-700 uppercase">Signed in as</span>
                 <Link href={`/account`} passHref>
-
                   <button
                     className="flex items-center justify-between border-b border-gray-200 py-2 w-full"
                     onClick={close}
@@ -140,7 +133,6 @@ const MainMenu = () => {
                     <span className="normal-case">{customer.email}</span>
                     <ChevronDown className="-rotate-90" />
                   </button>
-
                 </Link>
               </div>
             )}
@@ -167,7 +159,7 @@ const MainMenu = () => {
         </div>
       </div>
     </div>
-  );
+  )
 }
 
 export default MainMenu

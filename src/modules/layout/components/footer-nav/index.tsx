@@ -12,38 +12,34 @@ const FooterNav = () => {
 
   return (
     <div className="content-container flex flex-col gap-y-8 pt-16 pb-8">
-      <div className="flex flex-col gap-y-6 xsmall:flex-row items-start justify-between">
+      <div className="flex flex-col gap-6 xsmall:flex-row items-start justify-between">
         <div>
           <Link href="/" className="text-xl-semi uppercase">
             {storeContent?.name}
           </Link>
 
-          <div className="flex flex-col gap-4 mt-4">
+          <ul className="flex flex-col gap-4 mt-4 text-xs">
             {storeContent?.address && (
-              <div className="flex flex-row">
-                <LocateIcon className="text-cyan-600" />
-                <span className="ml-2 font-medium">
-                  {storeContent?.address}
-                </span>
-              </div>
+              <li className="flex flex-row items-center">
+                <LocateIcon className="text-cyan-600 min-w-[20px]" />
+                <span className="ml-2">{storeContent?.address}</span>
+              </li>
             )}
 
             {storeContent?.email && (
-              <div className="flex flex-row">
-                <Mail className="text-cyan-600" />
-                <span className="ml-2 font-medium">{storeContent?.email}</span>
-              </div>
+              <li className="flex flex-row items-center">
+                <Mail className="text-cyan-600 min-w-[20px]" />
+                <span className="ml-2">{storeContent?.email}</span>
+              </li>
             )}
 
             {storeContent?.phone_no && (
-              <div className="flex flex-row">
-                <Phone className="text-cyan-600" />
-                <span className="ml-2 font-medium">
-                  {storeContent?.phone_no}
-                </span>
-              </div>
+              <li className="flex flex-row items-center">
+                <Phone className="text-cyan-600 min-w-[20px]" />
+                <span className="ml-2">{storeContent?.phone_no}</span>
+              </li>
             )}
-          </div>
+          </ul>
           <div className="flex flex-row gap-4 mt-4">
             {storeContent?.instagram_url && (
               <Link href={storeContent.instagram_url} passHref target="_blank">
@@ -58,7 +54,7 @@ const FooterNav = () => {
             )}
           </div>
         </div>
-        <div className="text-small-regular grid grid-cols-2 gap-x-16">
+        <div className="text-small-regular grid grid-cols-2 gap-x-16 xsmall:min-w-[300px] small:min-w-[400px] medium:min-w-[700px]">
           <div className="flex flex-col gap-y-2">
             <span className="text-base-semi">Collections</span>
             <ul
@@ -85,7 +81,7 @@ const FooterNav = () => {
           </div>
         </div>
       </div>
-      <div className="flex flex-col-reverse gap-y-4 justify-center xsmall:items-center xsmall:flex-row xsmall:items-end xsmall:justify-between">
+      <div className="flex flex-col-reverse gap-y-4 justify-center xsmall:flex-row xsmall:items-end xsmall:justify-between">
         <span className="text-xsmall-regular text-gray-500">
           © Copyright {dayjs().year()} {storeContent?.name}
         </span>

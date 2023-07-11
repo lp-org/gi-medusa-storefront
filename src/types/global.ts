@@ -37,6 +37,7 @@ export type SiteProps = {
 
 export type PrefetchedPageProps = {
   notFound: boolean
+  data?: PricedProduct
 }
 
 // For pages with nested layouts
@@ -83,6 +84,7 @@ export type StoreContent = {
   email: string
   address: string
   logo: string
+  favicon: string
   slider: SliderType[]
   pages: PagesType[]
 }

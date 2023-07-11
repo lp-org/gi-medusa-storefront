@@ -16,6 +16,7 @@ const Nav = () => {
   const [isHome, setIsHome] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
   const storeContent = useAppStore((state) => state.storeContent)
+
   //useEffect that detects if window is scrolled > 5px on the Y axis
   useEffect(() => {
     if (isHome) {
@@ -76,8 +77,9 @@ const Nav = () => {
             <Link href="/" className="text-xl-semi uppercase" passHref>
               <Image
                 src={storeContent?.logo || "/logo.png"}
-                width={150}
-                height={150}
+                width={60}
+                height={60}
+                className="h-full w-full"
                 alt="logo"
               />
             </Link>

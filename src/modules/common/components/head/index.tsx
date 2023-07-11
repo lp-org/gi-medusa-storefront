@@ -13,12 +13,12 @@ const Head: React.FC<HeadProps> = ({ title, description, image }) => {
   return (
     <NextHead>
       <title>
-        {title} |{storeContent.name}
+        {title} | {storeContent?.name}
       </title>
       <meta itemProp="name" content={title} />
       {description && <meta itemProp="description" content={description} />}
-      {image && <meta itemProp="image" content={image} />}
-      <link rel="icon" href="/favicon.ico" />
+      {image && <meta itemProp="image" content={storeContent?.favicon} />}
+      <link rel="icon" href={storeContent?.favicon} />
     </NextHead>
   )
 }

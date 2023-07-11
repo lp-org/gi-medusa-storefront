@@ -60,26 +60,32 @@ const ProductTabs = ({ product }: ProductTabsProps) => {
 const ProductInfoTab = ({ product }: ProductTabsProps) => {
   return (
     <Tab.Panel className="text-small-regular py-8">
-      <div className="grid grid-cols-2 gap-x-8">
-        <div className="flex flex-col gap-y-4">
+      <div className="grid grid-cols-2 gap-x-8 gap-y-4">
+        {product.material && (
           <div>
             <span className="font-semibold">Material</span>
             <p>{product.material ? product.material : "-"}</p>
           </div>
+        )}
+        {product.origin_country && (
           <div>
             <span className="font-semibold">Country of origin</span>
             <p>{product.origin_country ? product.origin_country : "-"}</p>
           </div>
+        )}
+        {product?.type?.value && (
           <div>
             <span className="font-semibold">Type</span>
             <p>{product.type ? product.type.value : "-"}</p>
           </div>
-        </div>
-        <div className="flex flex-col gap-y-4">
+        )}
+        {product.weight && (
           <div>
             <span className="font-semibold">Weight</span>
             <p>{product.weight ? `${product.weight} g` : "-"}</p>
           </div>
+        )}
+        {product.width && (
           <div>
             <span className="font-semibold">Dimensions</span>
             <p>
@@ -88,11 +94,18 @@ const ProductInfoTab = ({ product }: ProductTabsProps) => {
                 : "-"}
             </p>
           </div>
-        </div>
+        )}
       </div>
       {product.tags?.length ? (
-        <div>
+        <div className="mt-4">
           <span className="font-semibold">Tags</span>
+          <div className="flex flex-row gap-4 mt-2">
+            {product.tags.map((tag) => (
+              <div key={tag.value} className="bg-gray-200 px-2 rounded">
+                {tag.value}
+              </div>
+            ))}
+          </div>
         </div>
       ) : null}
     </Tab.Panel>
