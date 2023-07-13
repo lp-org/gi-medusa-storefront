@@ -17,7 +17,7 @@ const Store: NextPageWithLayout = () => {
   const [params, setParams] = useState<StoreGetProductsParams>({})
   const storeContent = useAppStore((state) => state.storeContent)
   const sliders =
-    storeContent?.slider_product.filter((el) => el.is_active) || []
+    storeContent?.slider_product?.filter((el) => el.is_active) || []
   return (
     <>
       <Head title="Store" description="Explore all of our products." />

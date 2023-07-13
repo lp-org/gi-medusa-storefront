@@ -77,17 +77,17 @@ export type SliderType = {
 }
 
 export type StoreContent = {
-  name: string
-  facebook_url: string
-  instagram_url: string
-  phone_no: string
-  email: string
-  address: string
-  logo: string
-  favicon: string
-  slider: SliderType[]
-  slider_product: SliderType[]
-  pages: PagesType[]
+  name: string | null
+  facebook_url: string | null
+  instagram_url: string | null
+  phone_no: string | null
+  email: string | null
+  address: string | null
+  logo: string | null
+  favicon: string | null
+  slider: SliderType[] | null
+  slider_product: SliderType[] | null
+  pages: PagesType[] | null
 }
 
 export interface PagesType {
