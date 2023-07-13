@@ -10,7 +10,7 @@ const HomepageSwiper = () => {
   const windowWidth = useCurrentWidth()
   const storeContent = useAppStore((state) => state.storeContent)
   const router = useRouter()
-  const sliders = storeContent?.slider
+  const sliders = storeContent?.slider?.filter((el) => el.is_active) || []
   return (
     <div>
       <Swiper
@@ -34,27 +34,25 @@ const HomepageSwiper = () => {
           reverseDirection: !(windowWidth < 768),
         }}
       >
-        {sliders
-          .filter((el) => el.is_active)
-          .map((el, i) => (
-            <SwiperSlide
-              key={i}
-              onClick={() => {
-                if (el.url) {
-                  if (!el.open_new) router.push(el.url)
-                  else window.open(el.url, "_blank")
-                }
-              }}
-              className="hover:cursor-pointer"
-            >
-              <Image
-                src={el.image}
-                className="lg:rounded-lg"
-                layout="fill"
-                alt="banner"
-              />
-            </SwiperSlide>
-          ))}
+        {sliders.map((el, i) => (
+          <SwiperSlide
+            key={i}
+            onClick={() => {
+              if (el.url) {
+                if (!el.open_new) router.push(el.url)
+                else window.open(el.url, "_blank")
+              }
+            }}
+            className="hover:cursor-pointer"
+          >
+            <Image
+              src={el.image}
+              className="lg:rounded-lg"
+              layout="fill"
+              alt="banner"
+            />
+          </SwiperSlide>
+        ))}
       </Swiper>
     </div>
   )
