@@ -11,9 +11,8 @@ import { useAppStore } from "store"
 import { Autoplay, Pagination } from "swiper"
 import "swiper/css/pagination"
 import { SwiperSlide, Swiper } from "swiper/react"
-import { NextPageWithLayout } from "types/global"
 
-const Store: NextPageWithLayout = () => {
+const Store = () => {
   const [params, setParams] = useState<StoreGetProductsParams>({})
   const storeContent = useAppStore((state) => state.storeContent)
   const sliders =
@@ -75,7 +74,5 @@ const Store: NextPageWithLayout = () => {
     </>
   )
 }
-
-Store.getLayout = (page) => <Layout>{page}</Layout>
 
 export default Store

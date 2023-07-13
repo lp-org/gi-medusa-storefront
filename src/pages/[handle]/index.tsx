@@ -24,10 +24,8 @@ export const getServerSideProps: GetServerSideProps<{
 }> = async ({ query }) => {
   try {
     const res = await api.pages.get(query.handle as string)
-
     return { props: { page: res.data } }
   } catch (error) {
-    console.log(error)
     return { props: { page: null } }
   }
 }
