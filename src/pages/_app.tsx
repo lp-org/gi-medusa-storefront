@@ -9,6 +9,9 @@ import { Hydrate } from "@tanstack/react-query"
 import { CartProvider, MedusaProvider } from "medusa-react"
 import App, { AppContext, AppInitialProps, AppProps } from "next/app"
 import { useAppStore } from "store"
+import "swiper/css"
+import "swiper/css/navigation"
+
 import "styles/globals.css"
 import { AppPropsWithLayout, StoreContent } from "types/global"
 
@@ -21,8 +24,6 @@ function MyApp({
 }> &
   AppProps & { storeContent: StoreContent }) {
   const setStoreContent = useAppStore((state) => state.setStoreContent)
-  const setSlider = useAppStore((state) => state.setSlider)
-  setSlider(storeContent.slider)
   setStoreContent(storeContent)
   return (
     <MedusaProvider

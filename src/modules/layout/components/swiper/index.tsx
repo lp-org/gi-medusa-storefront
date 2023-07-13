@@ -1,7 +1,6 @@
 import React from "react"
 import { Pagination, Autoplay } from "swiper"
 import { Swiper, SwiperSlide } from "swiper/react"
-import "swiper/css"
 import "swiper/css/pagination"
 import Image from "next/image"
 import useCurrentWidth from "@lib/hooks/use-current-width"
@@ -9,8 +8,9 @@ import { useAppStore } from "store"
 import { useRouter } from "next/router"
 const HomepageSwiper = () => {
   const windowWidth = useCurrentWidth()
-  const sliders = useAppStore((state) => state.slider)
+  const storeContent = useAppStore((state) => state.storeContent)
   const router = useRouter()
+  const sliders = storeContent?.slider
   return (
     <div>
       <Swiper

@@ -71,7 +71,7 @@ export type InfiniteProductPage = {
 
 export type SliderType = {
   image: string
-  description?: string
+  url?: string
   is_active: boolean
   open_new: boolean
 }
@@ -86,6 +86,7 @@ export type StoreContent = {
   logo: string
   favicon: string
   slider: SliderType[]
+  slider_product: SliderType[]
   pages: PagesType[]
 }
 

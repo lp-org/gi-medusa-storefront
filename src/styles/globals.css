@@ -144,3 +144,17 @@
   opacity: 0.5;
   
 }
+
+
+
+.dot {   
+  
+  height: 4px!important;
+  width: 40px!important;
+  
+  border-radius: 0!important;
+ 
+}
+
+
+
