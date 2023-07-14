@@ -13,6 +13,12 @@ const api = {
       return medusaRequest("GET", path)
     },
   },
+  geoip: {
+    get() {
+      const path = `/store/geoip`
+      return medusaRequest("GET", path)
+    },
+  },
 }
 
 export default api
