@@ -1,5 +1,6 @@
 import { Listbox, Transition } from "@headlessui/react"
 import { useStore } from "@lib/context/store-context"
+import api from "@lib/data/api"
 import useToggleState from "@lib/hooks/use-toggle-state"
 import { useQuery } from "@tanstack/react-query"
 import { useRegions } from "medusa-react"
@@ -38,9 +39,9 @@ const CountrySelect = () => {
   }, [countryCode, options])
   const { data: detectedCountryCode } = useQuery({
     queryFn: async () => {
-      const ipData = await (await fetch("http://ip-api.com/json")).json()
-      const { countryCode } = ipData
-      return countryCode
+      const ipData = await api.geoip.get()
+      const { country } = ipData.data
+      return country
     },
   })
   useEffect(() => {
