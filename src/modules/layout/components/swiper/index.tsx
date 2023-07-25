@@ -12,7 +12,7 @@ const HomepageSwiper = () => {
   const router = useRouter()
   const sliders = storeContent?.slider?.filter((el) => el.is_active) || []
   return (
-    <div>
+    sliders.length > 0 && (
       <Swiper
         style={{
           // @ts-ignore
@@ -54,7 +54,7 @@ const HomepageSwiper = () => {
           </SwiperSlide>
         ))}
       </Swiper>
-    </div>
+    )
   )
 }
 

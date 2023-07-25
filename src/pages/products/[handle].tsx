@@ -35,7 +35,7 @@ const ProductPage = ({
   if (notFound) {
     replace("/404")
   }
-  console.log("data", data)
+
   if (data) {
     return (
       <>
@@ -74,7 +74,7 @@ export const getServerSideProps: GetServerSideProps<
       },
     }
   }
-  console.log(queryData)
+
   return {
     props: {
       data: queryData,

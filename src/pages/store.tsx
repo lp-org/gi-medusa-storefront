@@ -40,10 +40,10 @@ const Store = () => {
             modules={[Pagination, Autoplay]}
             className="lg:h-[440px] h-72 "
             spaceBetween={20}
-            // autoplay={{
-            //   delay: 2500,
-            //   disableOnInteraction: false,
-            // }}
+            autoplay={{
+              delay: 2500,
+              disableOnInteraction: false,
+            }}
           >
             {sliders.map((el, i) => (
               <SwiperSlide
