@@ -8,8 +8,7 @@ module.exports = withStoreConfig({
     domains: [
       "medusa-public-images.s3.eu-west-1.amazonaws.com",
       "localhost",
-      "api.appsitetest.xyz",
-      "api.grin-global.com",
+      "api.gitechnano.com"
     ],
   },
   typescript: {
