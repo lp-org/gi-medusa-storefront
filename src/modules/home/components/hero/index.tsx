@@ -48,7 +48,7 @@ const Hero = () => {
         draggable="false"
       /> */}
       <video
-        src="/1073636654-preview.mp4"
+        src="/banner.mp4"
         className="h-full w-full object-cover"
         autoPlay
         loop

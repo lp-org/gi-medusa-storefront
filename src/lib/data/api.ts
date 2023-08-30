@@ -8,8 +8,8 @@ const api = {
     },
   },
   pages: {
-    get(handle: string) {
-      const path = `/store/pages/${handle}`
+    get(handle: string, customize?: boolean) {
+      const path = `/store/pages/${handle}${customize && "?customize=1"}`
       return medusaRequest("GET", path)
     },
   },

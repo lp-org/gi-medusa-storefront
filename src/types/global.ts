@@ -97,4 +97,5 @@ export interface PagesType {
   description: string
   body: string
   publish: boolean
+  rank: number
 }

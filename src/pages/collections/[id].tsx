@@ -5,7 +5,7 @@ import CollectionTemplate from "@modules/collections/templates"
 import Head from "@modules/common/components/head"
 import Layout from "@modules/layout/templates"
 import SkeletonCollectionPage from "@modules/skeletons/templates/skeleton-collection-page"
-import { GetStaticPaths, GetStaticProps } from "next"
+import { GetServerSideProps, GetStaticPaths, GetStaticProps } from "next"
 import { useRouter } from "next/router"
 import { ParsedUrlQuery } from "querystring"
 import { ReactElement } from "react"
@@ -88,16 +88,16 @@ CollectionPage.getLayout = (page: ReactElement) => {
   return <Layout>{page}</Layout>
 }
 
-export const getStaticPaths: GetStaticPaths<Params> = async () => {
-  const ids = await getCollectionIds()
+// export const getStaticPaths: GetStaticPaths<Params> = async () => {
+//   const ids = await getCollectionIds()
 
-  return {
-    paths: ids.map((id) => ({ params: { id } })),
-    fallback: true,
-  }
-}
+//   return {
+//     paths: ids.map((id) => ({ params: { id } })),
+//     fallback: true,
+//   }
+// }
 
-export const getStaticProps: GetStaticProps = async (context) => {
+export const getServerSideProps: GetServerSideProps = async (context) => {
   const queryClient = new QueryClient()
   const id = context.params?.id as string
 

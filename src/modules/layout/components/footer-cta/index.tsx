@@ -3,23 +3,22 @@ import Image from "next/image"
 
 const FooterCTA = () => {
   return (
-    <div className="bg-cyan-100 w-full">
-      <div className="content-container flex flex-col-reverse gap-y-8 small:flex-row small:items-center justify-between py-16 relative">
-        <div>
-          <h3 className="text-2xl-semi">Shop the latest styles</h3>
-          <div className="mt-6">
-            <UnderlineLink href="/store">Explore products</UnderlineLink>
-          </div>
-        </div>
-
-        <div className="relative w-full aspect-square small:w-[35%] small:aspect-[28/36]">
+    <div className="bg-cyan-50 mt-8 w-full h-[480px]">
+      <div className="grid lg:grid-cols-2 grid-cols-1 h-full">
+        <div className="relative w-full sm:h-[220px] lg:h-full">
           <Image
-            src="/cta_three.jpg"
+            src="/cta.jpg"
             alt=""
             layout="fill"
             objectFit="cover"
-            className="absolute inset-0"
+            className=""
           />
+        </div>
+        <div className="justify-center items-center flex flex-col text-cyan-900 font-bold">
+          <h3 className="text-2xl-semi">Shop the latest products</h3>
+          <div className="mt-6">
+            <UnderlineLink href="/store">Explore products</UnderlineLink>
+          </div>
         </div>
       </div>
     </div>
