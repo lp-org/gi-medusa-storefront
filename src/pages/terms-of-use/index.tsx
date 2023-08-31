@@ -10,9 +10,9 @@ const TermOfUse = ({
   page,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   return (
-    <div className="content-container overflow-auto my-4 flex flex-row relative">
+    <div className="content-container overflow-auto my-4 flex lg:flex-row flex-col relative">
       <Tab.Group>
-        <Tab.List className="flex flex-col space-y-2 w-56 fixed">
+        <Tab.List className="flex sm:flex-col lg:flex-col space-y-2 lg:w-56 sm:w-full lg:fixed sm:block h-full">
           {page
             ?.sort((a, b) => a.rank - b.rank)
             .map((el) => (
@@ -31,7 +31,7 @@ const TermOfUse = ({
             ))}
         </Tab.List>
 
-        <Tab.Panels className="ml-60">
+        <Tab.Panels className="lg:ml-60 mt-10 lg:mt-0">
           {page?.map((el) => (
             <Tab.Panel key={el.id}>
               <div dangerouslySetInnerHTML={{ __html: el.body }} />
