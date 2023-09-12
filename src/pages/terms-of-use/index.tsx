@@ -1,5 +1,6 @@
 import { Tab } from "@headlessui/react"
 import api from "@lib/data/api"
+import Head from "@modules/common/components/head"
 import HandlePage from "@pages/[handle]"
 import { reject } from "lodash"
 import { GetServerSideProps, InferGetServerSidePropsType } from "next"
@@ -10,36 +11,43 @@ const TermOfUse = ({
   page,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   return (
-    <div className="content-container overflow-auto my-4 flex lg:flex-row flex-col relative">
-      <Tab.Group>
-        <Tab.List className="flex sm:flex-col lg:flex-col space-y-2 lg:w-56 sm:w-full lg:fixed sm:block h-full">
-          {page
-            ?.sort((a, b) => a.rank - b.rank)
-            .map((el) => (
-              <Tab
-                className={({ selected }) =>
-                  `w-full px-4 py-2 text-sm leading-5 font-medium rounded-md focus:outline-none ${
-                    selected
-                      ? "bg-cyan-500 text-white"
-                      : "text-gray-500 hover:text-gray-700"
-                  }`
-                }
-                key={el.id}
-              >
-                <div dangerouslySetInnerHTML={{ __html: el.title }} />
-              </Tab>
-            ))}
-        </Tab.List>
+    <>
+      {" "}
+      <Head
+        title="Terms of Use"
+        description="Welcome to the Gitech Nano website or Savemax store. Please read these Terms of Use carefully. "
+      />{" "}
+      <div className="content-container overflow-auto my-4 flex lg:flex-row flex-col relative">
+        <Tab.Group>
+          <Tab.List className="flex sm:flex-col lg:flex-col space-y-2 lg:w-56 sm:w-full lg:fixed sm:block h-full">
+            {page
+              ?.sort((a, b) => a.rank - b.rank)
+              .map((el) => (
+                <Tab
+                  className={({ selected }) =>
+                    `w-full px-4 py-2 text-sm leading-5 font-medium rounded-md focus:outline-none ${
+                      selected
+                        ? "bg-cyan-500 text-white"
+                        : "text-gray-500 hover:text-gray-700"
+                    }`
+                  }
+                  key={el.id}
+                >
+                  <div dangerouslySetInnerHTML={{ __html: el.title }} />
+                </Tab>
+              ))}
+          </Tab.List>
 
-        <Tab.Panels className="lg:ml-60 mt-10 lg:mt-0">
-          {page?.map((el) => (
-            <Tab.Panel key={el.id}>
-              <div dangerouslySetInnerHTML={{ __html: el.body }} />
-            </Tab.Panel>
-          ))}
-        </Tab.Panels>
-      </Tab.Group>
-    </div>
+          <Tab.Panels className="lg:ml-60 mt-10 lg:mt-0">
+            {page?.map((el) => (
+              <Tab.Panel key={el.id}>
+                <div dangerouslySetInnerHTML={{ __html: el.body }} />
+              </Tab.Panel>
+            ))}
+          </Tab.Panels>
+        </Tab.Group>
+      </div>
+    </>
   )
 }
 

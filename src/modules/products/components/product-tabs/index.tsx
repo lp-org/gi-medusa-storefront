@@ -1,9 +1,11 @@
 import { Tab } from "@headlessui/react"
+import api from "@lib/data/api"
 import { Product } from "@medusajs/medusa"
 import { PricedProduct } from "@medusajs/medusa/dist/types/pricing"
 import Back from "@modules/common/icons/back"
 import FastDelivery from "@modules/common/icons/fast-delivery"
 import Refresh from "@modules/common/icons/refresh"
+import { useQuery } from "@tanstack/react-query"
 import clsx from "clsx"
 import { useMemo } from "react"
 
@@ -24,7 +26,6 @@ const ProductTabs = ({ product }: ProductTabsProps) => {
       },
     ]
   }, [product])
-
   return (
     <div>
       <Tab.Group>
@@ -113,10 +114,16 @@ const ProductInfoTab = ({ product }: ProductTabsProps) => {
 }
 
 const ShippingInfoTab = () => {
+  const { data } = useQuery({
+    queryKey: ["refund_policy"],
+    queryFn: () => api.pages.get("custom_refund_policy", true),
+  })
+  const refundPolicy = data?.data
+  console.log(refundPolicy)
   return (
     <Tab.Panel className="text-small-regular py-8">
       <div className="grid grid-cols-1 gap-y-8">
-        <div className="flex items-start gap-x-2">
+        {/* <div className="flex items-start gap-x-2">
           <FastDelivery />
           <div>
             <span className="font-semibold">Fast delivery</span>
@@ -146,7 +153,8 @@ const ShippingInfoTab = () => {
               is hassle-free.
             </p>
           </div>
-        </div>
+        </div> */}
+        <div dangerouslySetInnerHTML={{ __html: refundPolicy?.body }}></div>
       </div>
     </Tab.Panel>
   )
