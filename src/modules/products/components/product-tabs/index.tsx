@@ -20,10 +20,10 @@ const ProductTabs = ({ product }: ProductTabsProps) => {
         label: "Product Information",
         component: <ProductInfoTab product={product} />,
       },
-      {
-        label: "Shipping & Returns",
-        component: <ShippingInfoTab />,
-      },
+      // {
+      //   label: "Shipping & Returns",
+      //   component: <ShippingInfoTab />,
+      // },
     ]
   }, [product])
   return (
@@ -119,7 +119,7 @@ const ShippingInfoTab = () => {
     queryFn: () => api.pages.get("custom_refund_policy", true),
   })
   const refundPolicy = data?.data
-  console.log(refundPolicy)
+
   return (
     <Tab.Panel className="text-small-regular py-8">
       <div className="grid grid-cols-1 gap-y-8">
