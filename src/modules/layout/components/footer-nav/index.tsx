@@ -16,10 +16,10 @@ const FooterNav = () => {
         {" "}
         <div className="flex flex-col gap-6 xsmall:flex-row items-start justify-between">
           <div>
-            <Link href="/" className="text-xl-semi uppercase">
-              {storeContent?.name}
+            <Link href="/" className="text-xl-semi">
+              Savemax Store by GI Tech Nano Solution Sdn Bhd.
             </Link>
-
+            <span className="text-[8px]"> 201501045034(1170356-X)</span>
             <ul className="flex flex-col gap-4 mt-4 text-xs">
               {storeContent?.address && (
                 <li className="flex flex-row items-center">
