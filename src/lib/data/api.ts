@@ -19,6 +19,13 @@ const api = {
       return medusaRequest("GET", path)
     },
   },
+
+  weightFulfillment: {
+    get() {
+      const path = `/store/weight-fulfillment`
+      return medusaRequest("GET", path)
+    },
+  },
 }
 
 export default api

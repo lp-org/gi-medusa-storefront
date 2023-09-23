@@ -6,9 +6,12 @@ import Radio from "@modules/common/components/radio"
 import Spinner from "@modules/common/icons/spinner"
 import clsx from "clsx"
 import { formatAmount, useCart, useCartShippingOptions } from "medusa-react"
-import React, { useEffect, useMemo } from "react"
-import { Controller, useForm } from "react-hook-form"
+import React, { useEffect, useMemo, useState } from "react"
+import { Controller, useForm, useWatch } from "react-hook-form"
 import StepContainer from "../step-container"
+import { useMutation } from "@tanstack/react-query"
+import api from "@lib/data/api"
+import { useAppStore } from "store"
 
 type ShippingOption = {
   value?: string
@@ -26,6 +29,7 @@ type ShippingFormProps = {
 
 const Shipping: React.FC<ShippingProps> = ({ cart }) => {
   const { addShippingMethod, setCart } = useCart()
+  const [fulfillmentWeightInfo, setFulfillmentWeightInfo] = useState()
   const {
     control,
     setError,
@@ -35,11 +39,26 @@ const Shipping: React.FC<ShippingProps> = ({ cart }) => {
       soId: cart.shipping_methods?.[0]?.shipping_option_id,
     },
   })
-
+  const soid = useWatch({ control, name: "soId" })
+  const { mutate } = useMutation({
+    mutationFn: api.weightFulfillment.get,
+    onSuccess: (res) => {
+      setFulfillmentWeightInfo(res.data?.[0])
+    },
+  })
   // Fetch shipping options
   const { shipping_options, refetch } = useCartShippingOptions(cart.id, {
     enabled: !!cart.id,
   })
+
+  useEffect(() => {
+    const selected = shipping_options?.find((el) => el.id === soid)
+    if (selected) {
+      if (selected.data?.id === "weight-fulfillment") {
+        mutate()
+      }
+    }
+  }, [shipping_options, soid])
 
   // Any time the cart changes we need to ensure that we are displaying valid shipping options
   useEffect(() => {
@@ -89,6 +108,32 @@ const Shipping: React.FC<ShippingProps> = ({ cart }) => {
 
     return []
   }, [shipping_options, cart])
+
+  const totalWeight = useMemo(() => {
+    return cart.items.reduce((prev, curr) => {
+      return prev + (curr.variant.weight || 0) * curr.quantity
+    }, 0)
+  }, [cart])
+  const setDetectSabahSarawak = useAppStore(
+    (state) => state.setDetectSabahSarawak
+  )
+  const detectSabahSarawak = useMemo(() => {
+    // Check if 'province' or 'city' contains "Sabah" or "Sarawak"
+    let result = false
+    const keywords = ["sabah", "sarawak"]
+    if (
+      (cart?.shipping_address?.province &&
+        keywords.includes(
+          cart?.shipping_address?.province.toLocaleLowerCase()
+        )) ||
+      (cart?.shipping_address?.city &&
+        keywords.includes(cart?.shipping_address?.city.toLocaleLowerCase()))
+    ) {
+      result = true
+    }
+    setDetectSabahSarawak(result)
+    return result
+  }, [cart])
 
   const {
     sameAsBilling: { state: sameBilling },
@@ -156,6 +201,34 @@ const Shipping: React.FC<ShippingProps> = ({ cart }) => {
                   )
                 }}
               />
+              {fulfillmentWeightInfo && (
+                <div className="bg-yellow-200 m-4 p-4 rounded flex flex-col">
+                  <div className="text-lg">
+                    {` Total Weight : `}
+                    <b>{(totalWeight / 1000).toFixed(2)} kg(s)</b>
+                  </div>
+                  <div className="text-sm mt-2">
+                    {`For orders weighing ${
+                      fulfillmentWeightInfo?.initial_weight / 1000
+                    } kg(s) or less, you'll pay a flat
+                  rate of ${formatAmount({
+                    amount: fulfillmentWeightInfo?.initial_price,
+                    region: cart.region,
+                  })}. For orders over ${
+                      fulfillmentWeightInfo?.initial_weight / 1000
+                    } kg(s), we'll add an extra
+                  RM 
+                    ${formatAmount({
+                      amount: fulfillmentWeightInfo?.additional_price,
+                      region: cart.region,
+                    })}
+                   for every ${
+                     fulfillmentWeightInfo?.every_additional_weight / 1000
+                   }
+                  kg(s).`}
+                  </div>
+                </div>
+              )}
             </div>
           )
         }}

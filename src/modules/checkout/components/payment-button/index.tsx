@@ -7,6 +7,7 @@ import { PayPalButtons, PayPalScriptProvider } from "@paypal/react-paypal-js"
 import { useElements, useStripe } from "@stripe/react-stripe-js"
 import { useCart } from "medusa-react"
 import React, { useEffect, useState } from "react"
+import { useAppStore } from "store"
 
 type PaymentButtonProps = {
   paymentSession?: PaymentSession | null
@@ -221,6 +222,8 @@ const PayPalPaymentButton = ({
 }
 
 const ManualTestPaymentButton = ({ notReady }: { notReady: boolean }) => {
+  const detectSabahSarawak = useAppStore((state) => state.detectSabahSarawak)
+
   const [submitting, setSubmitting] = useState(false)
 
   const { onPaymentCompleted } = useCheckout()
@@ -234,9 +237,20 @@ const ManualTestPaymentButton = ({ notReady }: { notReady: boolean }) => {
   }
 
   return (
-    <Button disabled={submitting || notReady} onClick={handlePayment}>
-      {submitting ? <Spinner /> : "Checkout"}
-    </Button>
+    <>
+      <Button
+        disabled={submitting || notReady || detectSabahSarawak}
+        onClick={handlePayment}
+      >
+        {submitting ? <Spinner /> : "Checkout"}
+      </Button>
+      {detectSabahSarawak && (
+        <div className="text-white bg-red-400  p-4">
+          Shipping available for West Malaysia only. Unfortunately, we do not
+          deliver to Sabah and Sarawak regions.
+        </div>
+      )}
+    </>
   )
 }
 
