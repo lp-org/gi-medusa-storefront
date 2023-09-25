@@ -55,7 +55,7 @@ const Hero = () => {
         muted
       />
       <div
-        className="h-screen absolute top-0  w-screen bg-cover bg-no-repeat"
+        className="h-screen absolute top-0  w-full bg-cover bg-no-repeat"
         style={{
           backgroundImage:
             "radial-gradient( closest-side at 50% 50%, rgba(255, 255, 255, 0), #000 130% )",
