@@ -79,6 +79,7 @@ const ProfileEmail: React.FC<MyInformationProps> = ({ customer }) => {
         isError={isError}
         errorMessage={errorMessage}
         clearState={clearState}
+        editDisabled
       >
         <div className="grid grid-cols-1 gap-y-2">
           <Input

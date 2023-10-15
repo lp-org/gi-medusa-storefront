@@ -3,6 +3,7 @@ import ChevronDown from "@modules/common/icons/chevron-down"
 import MapPin from "@modules/common/icons/map-pin"
 import Package from "@modules/common/icons/package"
 import User from "@modules/common/icons/user"
+import { AlertCircle } from "lucide-react"
 import { formatAmount } from "medusa-react"
 import Link from "next/link"
 
@@ -23,40 +24,37 @@ const Overview = ({ orders, customer }: OverviewProps) => {
             <li>
               <Link
                 href="/account/profile"
-                className="flex items-center justify-between py-4 border-b border-gray-200 px-8">
-
+                className="flex items-center justify-between py-4 border-b border-gray-200 px-8"
+              >
                 <div className="flex items-center gap-x-2">
                   <User size={16} />
                   <span>Profile</span>
                 </div>
                 <ChevronDown className="transform -rotate-90" />
-
               </Link>
             </li>
             <li>
               <Link
                 href="/account/addresses"
-                className="flex items-center justify-between py-4 border-b border-gray-200 px-8">
-
+                className="flex items-center justify-between py-4 border-b border-gray-200 px-8"
+              >
                 <div className="flex items-center gap-x-2">
                   <MapPin size={16} />
                   <span>Addresses</span>
                 </div>
                 <ChevronDown className="transform -rotate-90" />
-
               </Link>
             </li>
             <li>
               <Link
                 href="/account/orders"
-                className="flex items-center justify-between py-4 border-b border-gray-200 px-8">
-
+                className="flex items-center justify-between py-4 border-b border-gray-200 px-8"
+              >
                 <div className="flex items-center gap-x-2">
                   <Package size={16} />
                   <span>Orders</span>
                 </div>
                 <ChevronDown className="transform -rotate-90" />
-
               </Link>
             </li>
           </ul>
@@ -84,6 +82,14 @@ const Overview = ({ orders, customer }: OverviewProps) => {
                     Completed
                   </span>
                 </div>
+                {getProfileCompletionMsg(customer).map((el, i) => (
+                  <div
+                    key={i}
+                    className="bg-red-500 text-white p-4 rounded flex gap-4"
+                  >
+                    <AlertCircle /> {el}
+                  </div>
+                ))}
               </div>
 
               <div className="flex flex-col gap-y-4">
@@ -109,12 +115,9 @@ const Overview = ({ orders, customer }: OverviewProps) => {
                     return (
                       <li key={order.id}>
                         <Link href={`/order/details/${order.id}`}>
-
                           <div className="bg-gray-50 flex justify-between items-center p-4">
                             <div className="grid grid-cols-3 grid-rows-2 text-small-regular gap-x-4 flex-1">
-                              <span className="font-semibold">
-                                Date placed
-                              </span>
+                              <span className="font-semibold">Date placed</span>
                               <span className="font-semibold">
                                 Order number
                               </span>
@@ -143,10 +146,9 @@ const Overview = ({ orders, customer }: OverviewProps) => {
                               <ChevronDown className="-rotate-90" />
                             </button>
                           </div>
-
                         </Link>
                       </li>
-                    );
+                    )
                   })
                 ) : (
                   <span>No recent orders</span>
@@ -157,7 +159,7 @@ const Overview = ({ orders, customer }: OverviewProps) => {
         </div>
       </div>
     </div>
-  );
+  )
 }
 
 const getProfileCompletion = (customer?: Omit<Customer, "password_hash">) => {
@@ -184,6 +186,34 @@ const getProfileCompletion = (customer?: Omit<Customer, "password_hash">) => {
   }
 
   return (count / 4) * 100
+}
+
+const getProfileCompletionMsg = (
+  customer?: Omit<Customer, "password_hash">
+) => {
+  let msg = []
+
+  if (!customer) {
+    return []
+  }
+
+  if (!customer.email) {
+    msg.push("Please update your email")
+  }
+
+  if (!customer.first_name && !customer.last_name) {
+    msg.push("Please update your first name & last name")
+  }
+
+  if (!customer.phone) {
+    msg.push("Please update your phone")
+  }
+
+  if (!customer.billing_address) {
+    msg.push("Please update your shipping address & billing address")
+  }
+
+  return msg
 }
 
 export default Overview

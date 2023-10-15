@@ -16,7 +16,7 @@ const Home: NextPageWithLayout = (props) => {
         description={`Shop all available models only at the ${storeContent.name}. Worldwide Shipping. Secure Payment.`}
       />
 
-      <Hero />
+      <Hero storeContent={storeContent} />
       <div className="max-w-6xl mx-auto lg:mt-4">
         <HomepageSwiper />
       </div>

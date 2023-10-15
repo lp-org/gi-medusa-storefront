@@ -45,7 +45,7 @@ const BillingAddress = () => {
             touched={touchedFields}
           />
           <Input
-            label="Apartments, suite, etc."
+            label="Address 2"
             {...register("billing_address.address_2")}
             autoComplete="address-line2"
             errors={errors}

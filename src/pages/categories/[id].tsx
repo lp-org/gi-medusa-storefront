@@ -38,7 +38,7 @@ export const fetchCategoryProducts = async ({
     category_id: [id],
     cart_id: cartId,
   })
-  console.log(products)
+
   return {
     response: { products, count },
     nextPage: count > offset + 12 ? offset + 12 : null,

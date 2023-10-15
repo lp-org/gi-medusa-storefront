@@ -5,7 +5,17 @@ import CountrySelect from "../country-select"
 import { StoreContent } from "types/global"
 import { useAppStore } from "store"
 import dayjs from "dayjs"
-import { Instagram, Facebook, LocateIcon, Mail, Phone } from "lucide-react"
+import {
+  Instagram,
+  Facebook,
+  LocateIcon,
+  Mail,
+  Phone,
+  Globe,
+} from "lucide-react"
+import Whatsapp from "@modules/common/components/icons/Whatsapp"
+import Tiktok from "@modules/common/components/icons/Tiktok"
+import Shopee from "@modules/common/components/icons/Shopee"
 const FooterNav = () => {
   const { collections } = useCollections()
   const storeContent = useAppStore((state) => state.storeContent)
@@ -49,13 +59,37 @@ const FooterNav = () => {
                   passHref
                   target="_blank"
                 >
-                  <Instagram className="cursor-pointer text-cyan-600" />
+                  <Instagram className="cursor-pointer text-cyan-500" />
                 </Link>
               )}
 
               {storeContent?.facebook_url && (
                 <Link href={storeContent.facebook_url} passHref target="_blank">
-                  <Facebook className="cursor-pointer text-cyan-600" />
+                  <Facebook className="cursor-pointer text-cyan-500" />
+                </Link>
+              )}
+
+              {storeContent?.tiktok && (
+                <Link href={storeContent.tiktok} passHref target="_blank">
+                  <Tiktok className="cursor-pointer text-cyan-500" />
+                </Link>
+              )}
+
+              {storeContent?.shopee && (
+                <Link href={storeContent.shopee} passHref target="_blank">
+                  <Shopee className="cursor-pointer text-cyan-500" />
+                </Link>
+              )}
+
+              {storeContent?.whatapps && (
+                <Link href={storeContent.whatapps} passHref target="_blank">
+                  <Whatsapp className="cursor-pointer text-cyan-500" />
+                </Link>
+              )}
+
+              {storeContent?.website && (
+                <Link href={storeContent.website} passHref target="_blank">
+                  <Globe className="cursor-pointer text-cyan-500" />
                 </Link>
               )}
             </div>

@@ -9,14 +9,14 @@ import { FieldValues, useForm } from "react-hook-form"
 
 interface SignInCredentials extends FieldValues {
   email: string
-  password: string
 }
 
-const Login = () => {
+const ForgotPassword = () => {
   const { loginView, refetchCustomer } = useAccount()
   const [_, setCurrentView] = loginView
   const [authError, setAuthError] = useState<string | undefined>(undefined)
   const router = useRouter()
+  const [emailSent, setEmailSent] = useState(false)
 
   const handleError = (_e: Error) => {
     setAuthError("Invalid email or password")
@@ -29,11 +29,11 @@ const Login = () => {
   } = useForm<SignInCredentials>()
 
   const onSubmit = handleSubmit(async (credentials) => {
-    await medusaClient.auth
-      .authenticate(credentials)
+    await medusaClient.customers
+      .generatePasswordToken({ email: credentials.email })
       .then(() => {
         refetchCustomer()
-        router.push("/account")
+        setEmailSent(true)
       })
       .catch(handleError)
   })
@@ -45,10 +45,8 @@ const Login = () => {
           <Spinner size={24} />
         </div>
       )}
-      <h1 className="text-large-semi uppercase mb-6">Welcome back</h1>
-      <p className="text-center text-base-regular text-gray-700 mb-8">
-        Sign in to access an enhanced shopping experience.
-      </p>
+      <h1 className="text-large-semi uppercase mb-6">Forgot password</h1>
+
       <form className="w-full" onSubmit={onSubmit}>
         <div className="flex flex-col w-full gap-y-2">
           <Input
@@ -57,40 +55,28 @@ const Login = () => {
             autoComplete="email"
             errors={errors}
           />
-          <Input
-            label="Password"
-            {...register("password", { required: "Password is required" })}
-            type="password"
-            autoComplete="current-password"
-            errors={errors}
-          />
         </div>
+        {emailSent && (
+          <div className="bg-green-500 p-4 rounded mt-4 text-white">
+            A reset link has been emailed to you.
+          </div>
+        )}
         {authError && (
           <div>
             <span className="text-rose-500 w-full text-small-regular">
-              These credentials do not match our records
+              No Record Found
             </span>
           </div>
         )}
         <Button className="mt-6">Enter</Button>
       </form>
       <span className="text-center text-gray-700 text-small-regular mt-6">
-        Not a member?{" "}
+        Back to{" "}
         <button
-          onClick={() => setCurrentView(LOGIN_VIEW.REGISTER)}
+          onClick={() => router.push("/account/login")}
           className="underline"
         >
-          Join us
-        </button>
-        .
-      </span>
-
-      <span className="text-center text-gray-700 text-small-regular mt-6">
-        <button
-          onClick={() => router.push("/account/forgot-password")}
-          className="underline"
-        >
-          Forgot password?{" "}
+          Login
         </button>
         .
       </span>
@@ -98,4 +84,4 @@ const Login = () => {
   )
 }
 
-export default Login
+export default ForgotPassword

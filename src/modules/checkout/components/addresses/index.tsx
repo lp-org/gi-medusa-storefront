@@ -83,7 +83,7 @@ const Addresses = () => {
                         <div className="flex items-center justify-center border border-gray-700 bg-gray-100 w-4 h-4">
                           ✓
                         </div>
-                        <span>Same as billing address</span>
+                        <span>Same as shipping address</span>
                       </div>
                     )}
                   </div>

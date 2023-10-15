@@ -88,6 +88,15 @@ export type StoreContent = {
   slider: SliderType[] | null
   slider_product: SliderType[] | null
   pages: PagesType[] | null
+  wording_1: string | null
+  wording_2: string | null
+  wording_3: string | null
+  banner_1: string | null
+  banner_2: string | null
+  tiktok: string | null
+  shopee: string | null
+  whatapps: string | null
+  website: string | null
 }
 
 export interface PagesType {

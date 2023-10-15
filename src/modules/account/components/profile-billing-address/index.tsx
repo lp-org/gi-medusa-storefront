@@ -175,7 +175,7 @@ const ProfileBillingAddress: React.FC<MyInformationProps> = ({ customer }) => {
             errors={errors}
           />
           <Input
-            label="Apartment, suite, etc."
+            label="Address 2"
             {...register("billing_address.address_2")}
             defaultValue={address2}
             errors={errors}
@@ -195,7 +195,7 @@ const ProfileBillingAddress: React.FC<MyInformationProps> = ({ customer }) => {
             />
           </div>
           <Input
-            label="Province"
+            label="Province / State"
             {...register("billing_address.province")}
             defaultValue={province}
             errors={errors}

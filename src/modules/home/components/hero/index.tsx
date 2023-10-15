@@ -1,6 +1,8 @@
 import UnderlineLink from "@modules/common/components/underline-link"
 import Image from "next/image"
 import { motion } from "framer-motion"
+import { StoreContent } from "types/global"
+import { isVideoURL } from "@lib/util/is-video"
 const motionStyle = {
   initial: {
     opacity: 0,
@@ -16,7 +18,7 @@ const motionStyle = {
   },
 }
 
-const Hero = () => {
+const Hero = ({ storeContent }: { storeContent: StoreContent }) => {
   return (
     <div className="h-screen w-full relative">
       <motion.div
@@ -25,14 +27,15 @@ const Hero = () => {
       >
         {" "}
         <h1 className="text-2xl-semi mb-4 drop-shadow-md shadow-black">
-          Summer styles are finally here
+          {storeContent.wording_1 || `Summer styles are finally here`}
         </h1>
         <p
           {...motionStyle}
           className="text-base-regular max-w-[32rem] mb-6 drop-shadow-md shadow-black"
         >
-          This year, our new summer collection will shelter you from the harsh
-          elements of a world that doesn&apos;t care if you live or die.
+          {storeContent.wording_2 ||
+            `This year, our new summer collection will shelter you from the harsh
+          elements of a world that doesn't care if you live or die.`}
         </p>
         <UnderlineLink href="/store">Explore products</UnderlineLink>
       </motion.div>
@@ -47,13 +50,38 @@ const Hero = () => {
         className="absolute inset-0"
         draggable="false"
       /> */}
-      <video
-        src="/banner.mp4"
-        className="h-full w-full object-cover"
-        autoPlay
-        loop
-        muted
-      />
+      {storeContent.banner_1 ? (
+        isVideoURL(storeContent.banner_1) ? (
+          <video
+            src={storeContent.banner_1}
+            className="h-full w-full object-cover"
+            autoPlay
+            loop
+            muted
+          />
+        ) : (
+          <Image
+            src={storeContent.banner_1}
+            layout="fill"
+            loading="eager"
+            priority={true}
+            quality={90}
+            objectFit="cover"
+            alt="Banner"
+            className="absolute inset-0"
+            draggable="false"
+          />
+        )
+      ) : (
+        <video
+          src={storeContent.banner_1 || "/banner.mp4"}
+          className="h-full w-full object-cover"
+          autoPlay
+          loop
+          muted
+        />
+      )}
+
       <div
         className="h-screen absolute top-0  w-full bg-cover bg-no-repeat"
         style={{

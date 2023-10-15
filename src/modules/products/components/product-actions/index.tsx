@@ -27,17 +27,19 @@ const ProductActions: React.FC<ProductActionsProps> = ({ product }) => {
   return (
     <div className="flex flex-col gap-y-2">
       {product.collection && (
-        (<Link
+        <Link
           href={`/collections/${product.collection.id}`}
-          className="text-small-regular text-gray-700">
-
+          className="text-small-regular text-gray-700"
+        >
           {product.collection.title}
-
-        </Link>)
+        </Link>
       )}
       <h3 className="text-xl-regular">{product.title}</h3>
 
-      <p className="text-base-regular">{product.description}</p>
+      <div className="text-base-regular">
+        {" "}
+        <div dangerouslySetInnerHTML={{ __html: product?.description_2 }}></div>
+      </div>
 
       {product.variants.length > 1 && (
         <div className="my-8 flex flex-col gap-y-6">
@@ -89,7 +91,7 @@ const ProductActions: React.FC<ProductActionsProps> = ({ product }) => {
         {!inStock ? "Out of stock" : "Add to cart"}
       </Button>
     </div>
-  );
+  )
 }
 
 export default ProductActions

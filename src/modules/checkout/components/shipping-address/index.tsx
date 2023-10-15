@@ -68,7 +68,7 @@ const ShippingAddress = () => {
               touched={touchedFields}
             />
             <Input
-              label="Apartments, suite, etc."
+              label="Address 2"
               {...register("shipping_address.address_2")}
               autoComplete="address-line2"
               errors={errors}

@@ -33,8 +33,8 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
 
     useImperativeHandle(ref, () => inputRef.current!)
 
-    const hasError = get(errors, name) && get(touched, name)
-
+    // const hasError = get(errors, name) && get(touched, name)
+    const hasError = get(errors, name)
     return (
       <div>
         <div className="relative z-0 w-full text-base-regular">
@@ -75,17 +75,19 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
           )}
         </div>
         {hasError && (
-          <ErrorMessage
-            errors={errors}
-            name={name}
-            render={({ message }) => {
-              return (
-                <div className="pt-1 pl-2 text-rose-500 text-xsmall-regular">
-                  <span>{message}</span>
-                </div>
-              )
-            }}
-          />
+          <>
+            <ErrorMessage
+              errors={errors}
+              name={name}
+              render={({ message }) => {
+                return (
+                  <div className="pt-1 pl-2 text-rose-500 text-xsmall-regular">
+                    <span>{message}</span>
+                  </div>
+                )
+              }}
+            />
+          </>
         )}
       </div>
     )

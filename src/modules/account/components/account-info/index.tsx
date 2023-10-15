@@ -13,6 +13,7 @@ type AccountInfoProps = {
   errorMessage?: string
   clearState: () => void
   children?: React.ReactNode
+  editDisabled?: boolean
 }
 
 const AccountInfo = ({
@@ -24,6 +25,7 @@ const AccountInfo = ({
   clearState,
   errorMessage = "An error occurred, please try again",
   children,
+  editDisabled = false,
 }: AccountInfoProps) => {
   const { state, close, toggle } = useToggleState()
 
@@ -52,14 +54,16 @@ const AccountInfo = ({
           </div>
         </div>
         <div>
-          <Button
-            variant="secondary"
-            className="w-[100px] min-h-[25px] py-1"
-            onClick={handleToggle}
-            type={state ? "reset" : "button"}
-          >
-            {state ? "Cancel" : "Edit"}
-          </Button>
+          {!editDisabled && (
+            <Button
+              variant="secondary"
+              className="w-[100px] min-h-[25px] py-1"
+              onClick={handleToggle}
+              type={state ? "reset" : "button"}
+            >
+              {state ? "Cancel" : "Edit"}
+            </Button>
+          )}
         </div>
       </div>
 

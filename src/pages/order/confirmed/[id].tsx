@@ -9,6 +9,7 @@ import { useRouter } from "next/router"
 import { ReactElement } from "react"
 import { dehydrate, QueryClient, useQuery } from "@tanstack/react-query"
 import { NextPageWithLayout } from "types/global"
+import Button from "@modules/common/components/button"
 
 const fetchOrder = async (id: string) => {
   return await medusaClient.orders.retrieve(id).then(({ order }) => order)

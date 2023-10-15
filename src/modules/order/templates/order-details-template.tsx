@@ -1,10 +1,12 @@
 import { Order } from "@medusajs/medusa"
+import Button from "@modules/common/components/button"
 import Help from "@modules/order/components/help"
 import Items from "@modules/order/components/items"
 import OrderDetails from "@modules/order/components/order-details"
 import OrderSummary from "@modules/order/components/order-summary"
 import ShippingDetails from "@modules/order/components/shipping-details"
-import React from "react"
+import React, { useRef } from "react"
+import { useReactToPrint } from "react-to-print"
 
 type OrderDetailsTemplateProps = {
   order: Order
@@ -13,10 +15,24 @@ type OrderDetailsTemplateProps = {
 const OrderDetailsTemplate: React.FC<OrderDetailsTemplateProps> = ({
   order,
 }) => {
+  let componentRef = useRef(null)
+  const handlePrint = useReactToPrint({
+    content: () => componentRef.current,
+    documentTitle: `${order.id}-Order`,
+    onPrintError: () => alert("there is an error when printing"),
+  })
   return (
     <div className="bg-gray-50 py-6 min-h-[calc(100vh-64px)]">
+      <div className="max-w-4xl h-full bg-white w-full mx-auto">
+        <Button
+          style={{ width: 100, marginLeft: "auto" }}
+          onClick={handlePrint}
+        >
+          Print Order
+        </Button>
+      </div>
       <div className="content-container flex justify-center">
-        <div className="max-w-4xl h-full bg-white w-full">
+        <div className="max-w-4xl h-full bg-white w-full" ref={componentRef}>
           <OrderDetails order={order} showStatus />
           <Items
             items={order.items}

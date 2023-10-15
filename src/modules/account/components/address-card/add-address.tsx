@@ -128,7 +128,7 @@ const AddAddress: React.FC = () => {
               autoComplete="address-line1"
             />
             <Input
-              label="Apartment, suite, etc."
+              label="Address 2"
               {...register("address_2")}
               errors={errors}
               autoComplete="address-line2"

@@ -2,7 +2,7 @@ import { useStore } from "@lib/context/store-context"
 import { LineItem, Region } from "@medusajs/medusa"
 import LineItemOptions from "@modules/common/components/line-item-options"
 import LineItemPrice from "@modules/common/components/line-item-price"
-import NativeSelect from "@modules/common/components/native-select"
+import Input from "@modules/common/components/input"
 import Trash from "@modules/common/icons/trash"
 import Thumbnail from "@modules/products/components/thumbnail"
 
@@ -25,17 +25,21 @@ const Item = ({ item, region }: ItemProps) => {
             <span>{item.title}</span>
             <LineItemOptions variant={item.variant} />
           </div>
-          <NativeSelect
+          <Input
+            label="Quantity"
+            name="quantity"
+            type="number"
             value={item.quantity}
-            onChange={(value) =>
-              updateItem({
-                lineId: item.id,
-                quantity: parseInt(value.target.value),
-              })
-            }
-            className="max-h-[35px] w-[75px]"
+            onChange={(value) => {
+              if (parseInt(value.target.value) > 0)
+                updateItem({
+                  lineId: item.id,
+                  quantity: parseInt(value.target.value),
+                })
+            }}
+            // className="max-h-[35px] w-[75px]"
           >
-            {Array.from(
+            {/* {Array.from(
               [
                 ...Array(
                   item.variant.inventory_quantity > 0
@@ -52,8 +56,8 @@ const Item = ({ item, region }: ItemProps) => {
                     {value}
                   </option>
                 )
-              })}
-          </NativeSelect>
+              })} */}
+          </Input>
         </div>
         <div className="flex items-end justify-between text-small-regular flex-1">
           <div>

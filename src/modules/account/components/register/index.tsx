@@ -1,5 +1,6 @@
 import { medusaClient } from "@lib/config"
 import { LOGIN_VIEW, useAccount } from "@lib/context/account-context"
+import { Response } from "@medusajs/medusa-js"
 import Button from "@modules/common/components/button"
 import Input from "@modules/common/components/input"
 import Spinner from "@modules/common/icons/spinner"
@@ -23,8 +24,8 @@ const Register = () => {
   const [authError, setAuthError] = useState<string | undefined>(undefined)
   const router = useRouter()
   const storeContent = useAppStore((state) => state.storeContent)
-  const handleError = (e: Error) => {
-    setAuthError("An error occured. Please try again.")
+  const handleError = (e: Response<Error>) => {
+    setAuthError(e.response?.data?.message)
   }
 
   const {
@@ -96,7 +97,7 @@ const Register = () => {
         {authError && (
           <div>
             <span className="text-rose-500 w-full text-small-regular">
-              These credentials do not match our records
+              {authError}
             </span>
           </div>
         )}
