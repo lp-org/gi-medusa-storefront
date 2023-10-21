@@ -19,7 +19,7 @@
 
   input:focus ~ label,
   input:not(:placeholder-shown) ~ label {
-    @apply -translate-y-2 text-xsmall-regular; 
+    @apply -translate-y-2 text-xsmall-regular;
   }
 
   input:focus ~ label {
@@ -51,7 +51,7 @@
 
 @layer components {
   .content-container {
-    @apply max-w-[1440px] w-full mx-auto px-8
+    @apply max-w-[1440px] w-full mx-auto px-8;
   }
 
   .contrast-btn {
@@ -111,50 +111,47 @@
   }
 }
 
-
 .image-swiper-button-prev {
   position: absolute;
-    top: var(--swiper-navigation-top-offset,50%);
-    width: calc(var(--swiper-navigation-size)/ 44 * 27);
-    height: var(--swiper-navigation-size);
-    margin-top: calc(0px - (var(--swiper-navigation-size)/ 2));
-    z-index: 10;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--swiper-navigation-color,var(--swiper-theme-color));
+  top: var(--swiper-navigation-top-offset, 50%);
+  width: calc(var(--swiper-navigation-size) / 44 * 27);
+  height: var(--swiper-navigation-size);
+  margin-top: calc(0px - (var(--swiper-navigation-size) / 2));
+  z-index: 10;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--swiper-navigation-color, var(--swiper-theme-color));
   left: 5px;
 }
 .image-swiper-button-next {
   position: absolute;
-    top: var(--swiper-navigation-top-offset,50%);
-    width: calc(var(--swiper-navigation-size)/ 44 * 27);
-    height: var(--swiper-navigation-size);
-    margin-top: calc(0px - (var(--swiper-navigation-size)/ 2));
-    z-index: 10;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--swiper-navigation-color,var(--swiper-theme-color));
+  top: var(--swiper-navigation-top-offset, 50%);
+  width: calc(var(--swiper-navigation-size) / 44 * 27);
+  height: var(--swiper-navigation-size);
+  margin-top: calc(0px - (var(--swiper-navigation-size) / 2));
+  z-index: 10;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--swiper-navigation-color, var(--swiper-theme-color));
   right: 5px;
 }
 .swiper-button-disabled {
   opacity: 0.5;
-  
 }
 
+.dot {
+  height: 4px !important;
+  width: 40px !important;
 
-
-.dot {   
-  
-  height: 4px!important;
-  width: 40px!important;
-  
-  border-radius: 0!important;
- 
+  border-radius: 0 !important;
 }
 
-
-
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}

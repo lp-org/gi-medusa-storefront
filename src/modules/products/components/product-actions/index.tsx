@@ -86,7 +86,11 @@ const ProductActions: React.FC<ProductActionsProps> = ({ product }) => {
           <div></div>
         )}
       </div>
-
+      {!variant && (
+        <span className="text-rose-600">
+          Please select product variation first
+        </span>
+      )}
       <Button onClick={addToCart}>
         {!inStock ? "Out of stock" : "Add to cart"}
       </Button>

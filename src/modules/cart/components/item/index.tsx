@@ -5,6 +5,7 @@ import LineItemPrice from "@modules/common/components/line-item-price"
 import Input from "@modules/common/components/input"
 import Trash from "@modules/common/icons/trash"
 import Thumbnail from "@modules/products/components/thumbnail"
+import NumberCounter from "@modules/common/components/input/NumberCounter"
 
 type ItemProps = {
   item: Omit<LineItem, "beforeInsert">
@@ -20,26 +21,23 @@ const Item = ({ item, region }: ItemProps) => {
         <Thumbnail thumbnail={item.thumbnail} size="full" />
       </div>
       <div className="text-base-regular flex flex-col gap-y-8">
-        <div className="flex items-start justify-between">
+        <div className="flex items-start justify-between flex-col lg:flex-row gap-4">
           <div className="flex flex-col">
             <span>{item.title}</span>
             <LineItemOptions variant={item.variant} />
           </div>
-          <Input
-            label="Quantity"
-            name="quantity"
-            type="number"
-            value={item.quantity}
-            onChange={(value) => {
-              if (parseInt(value.target.value) > 0)
+
+          <NumberCounter
+            initialValue={item.quantity}
+            onValueChange={(value) => {
+              if (value > 0)
                 updateItem({
                   lineId: item.id,
-                  quantity: parseInt(value.target.value),
+                  quantity: value,
                 })
             }}
-            // className="max-h-[35px] w-[75px]"
-          >
-            {/* {Array.from(
+          />
+          {/* {Array.from(
               [
                 ...Array(
                   item.variant.inventory_quantity > 0
@@ -57,7 +55,6 @@ const Item = ({ item, region }: ItemProps) => {
                   </option>
                 )
               })} */}
-          </Input>
         </div>
         <div className="flex items-end justify-between text-small-regular flex-1">
           <div>

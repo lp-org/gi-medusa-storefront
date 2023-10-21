@@ -50,7 +50,7 @@ export const ProductProvider = ({
   useEffect(() => {
     // initialize the option state
     const optionObj: Record<string, string> = {}
-    for (const option of (product.options || [])) {
+    for (const option of product.options || []) {
       Object.assign(optionObj, { [option.id]: undefined })
     }
     setOptions(optionObj)
