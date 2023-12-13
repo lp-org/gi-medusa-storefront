@@ -4,7 +4,8 @@ import clsx from "clsx"
 import React, { useEffect, useRef } from "react"
 import PaymentStripe from "../payment-stripe"
 import PaymentTest from "../payment-test"
-
+const MERCHANT_kEY = "mRncgj469i"
+const MERCHANT_CODE = "M42593"
 type PaymentContainerProps = {
   paymentSession: PaymentSession
   selected: boolean
@@ -74,6 +75,20 @@ const PaymentContainer: React.FC<PaymentContainerProps> = ({
   )
 }
 
+async function sha256(message: string) {
+  // encode as UTF-8
+  const msgBuffer = new TextEncoder().encode(message)
+
+  // hash the message
+  const hashBuffer = await crypto.subtle.digest("SHA-256", msgBuffer)
+
+  // convert ArrayBuffer to Array
+  const hashArray = Array.from(new Uint8Array(hashBuffer))
+
+  // convert bytes to hex string
+  const hashHex = hashArray.map((b) => b.toString(16).padStart(2, "0")).join("")
+  return hashHex
+}
 const PaymentElement = ({
   paymentSession,
 }: {
@@ -82,14 +97,42 @@ const PaymentElement = ({
   const formRef = useRef(null)
   const iframeRef = useRef(null)
   const [height, setHeight] = React.useState("0px")
+  const [signature, setSignature] = React.useState("")
+  const generateSignature = async ({
+    Amount,
+    Currency,
+    MerchantCode,
+    MerchantKey,
+    RefNo,
+  }: {
+    MerchantKey: string
+    MerchantCode: string
+    RefNo: string
+    Amount: string
+    Currency: string
+  }) => {
+    const str = `${MerchantKey}${MerchantCode}${RefNo}${Amount}${Currency}`
+    return await sha256(str)
+  }
   useEffect(() => {
-    if (formRef && paymentSession.provider_id === "ipay88") {
-      formRef?.current.submit()
-    }
+    ;(async () => {
+      if (formRef?.current && paymentSession.provider_id === "ipay88") {
+        const sig = await generateSignature({
+          Amount: "100",
+          Currency: "MYR",
+          MerchantCode: MERCHANT_CODE,
+          MerchantKey: MERCHANT_kEY,
+          RefNo: paymentSession.id,
+        })
+        formRef.current.querySelector("input[name=Signature]").value = sig
+        formRef?.current.submit()
+      }
+    })()
   }, [])
   const onLoad = () => {
     setHeight(iframeRef.current.contentWindow.document.body.scrollHeight + "px")
   }
+
   switch (paymentSession.provider_id) {
     case "stripe":
       return (
@@ -101,49 +144,51 @@ const PaymentElement = ({
     case "ipay88":
       return (
         <>
-          <form
-            method="post"
-            name="ePayment"
-            action="https://payment.ipay88.com.my/ePayment/entry.asp"
-            target="my_iframe"
-            ref={formRef}
-          >
-            <input type="hidden" name="MerchantCode" value="M42593" />
-            <input type="hidden" name="PaymentId" value="" />
-            <input type="hidden" name="RefNo" value="A00000001" />
-            <input type="hidden" name="Amount" value="1.00" />
-            <input type="hidden" name="Currency" value="MYR" />
-            <input type="hidden" name="ProdDesc" value="Photo Print" />
-            <input type="hidden" name="UserName" value="John Tan" />
-            <input type="hidden" name="UserEmail" value="john@hotmail.com" />
-            <input type="hidden" name="UserContact" value="0126500100" />
-            <input type="hidden" name="Remark" value="" />
-            <input type="hidden" name="Lang" value="UTF-8" />
-            <input type="hidden" name="SignatureType" value="SHA256" />
-            <input
-              type="hidden"
-              name="Signature"
-              value="598ad471ec675635dfe6fe90be16d952360768abf2a22ca48498d97d20654d9c"
-            />
-            <input
-              type="hidden"
-              name="ResponseURL"
-              value={`https://${location.host}/payment/response.asp`}
-            />
-            <input
-              type="hidden"
-              name="BackendURL"
-              value="https://www.YourBackendURL.com/payment/backend_response.asp"
-            />
-            <input type="hidden" name="Optional" value="{'carddetails':'Y'}" />
-            <input
-              type="hidden"
-              name="appdeeplink"
-              value="app://open.my.app/receipt/RefNo=A00000001"
-            />
-            <input type="hidden" name="Xfield1" value="" />
-            {/* <input type="submit" value="Proceed with Payment" name="Submit" /> */}
-          </form>
+          {
+            <form
+              method="post"
+              name="ePayment"
+              action="https://payment.ipay88.com.my/ePayment/entry.asp"
+              target="my_iframe"
+              ref={formRef}
+            >
+              <input type="hidden" name="MerchantCode" value={MERCHANT_CODE} />
+              <input type="hidden" name="PaymentId" value="" />
+              <input type="hidden" name="RefNo" value={paymentSession.id} />
+              <input type="hidden" name="Amount" value="1.00" />
+              <input type="hidden" name="Currency" value="MYR" />
+              <input type="hidden" name="ProdDesc" value="Photo Print" />
+              <input type="hidden" name="UserName" value="John Tan" />
+              <input type="hidden" name="UserEmail" value="john@hotmail.com" />
+              <input type="hidden" name="UserContact" value="0126500100" />
+              <input type="hidden" name="Remark" value="" />
+              <input type="hidden" name="Lang" value="UTF-8" />
+              <input type="hidden" name="SignatureType" value="SHA256" />
+              <input type="hidden" name="Signature" />
+              <input
+                type="hidden"
+                name="ResponseURL"
+                value={`https://${location.host}/payment/confirm`}
+              />
+              <input
+                type="hidden"
+                name="BackendURL"
+                value={`https://api.gitechnano.com/webhook/ipay88`}
+              />
+              <input
+                type="hidden"
+                name="Optional"
+                value="{'carddetails':'Y'}"
+              />
+              <input
+                type="hidden"
+                name="appdeeplink"
+                value="app://open.my.app/receipt/RefNo=A00000001"
+              />
+              {/* <input type="hidden" name="Xfield1" value="" /> */}
+              {/* <input type="submit" value="Proceed with Payment" name="Submit" /> */}
+            </form>
+          }
           <iframe
             ref={iframeRef}
             id="my_iframe"
