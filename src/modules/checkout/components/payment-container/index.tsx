@@ -1,7 +1,7 @@
 import { PaymentSession } from "@medusajs/medusa"
 import Radio from "@modules/common/components/radio"
 import clsx from "clsx"
-import React from "react"
+import React, { useEffect, useRef } from "react"
 import PaymentStripe from "../payment-stripe"
 import PaymentTest from "../payment-test"
 
@@ -28,6 +28,10 @@ const PaymentInfoMap: Record<string, { title: string; description: string }> = {
   manual: {
     title: "Test payment",
     description: "Test payment using medusa-payment-manual",
+  },
+  ipay88: {
+    title: "Credit card (IPay88)",
+    description: "Secure payment with credit card",
   },
 }
 
@@ -75,12 +79,82 @@ const PaymentElement = ({
 }: {
   paymentSession: PaymentSession
 }) => {
+  const formRef = useRef(null)
+  const iframeRef = useRef(null)
+  const [height, setHeight] = React.useState("0px")
+  useEffect(() => {
+    if (formRef && paymentSession.provider_id === "ipay88") {
+      formRef?.current.submit()
+    }
+  }, [])
+  const onLoad = () => {
+    setHeight(iframeRef.current.contentWindow.document.body.scrollHeight + "px")
+  }
   switch (paymentSession.provider_id) {
     case "stripe":
       return (
         <div className="pt-8 pr-7">
           <PaymentStripe />
         </div>
+      )
+
+    case "ipay88":
+      return (
+        <>
+          <form
+            method="post"
+            name="ePayment"
+            action="https://payment.ipay88.com.my/ePayment/entry.asp"
+            target="my_iframe"
+            ref={formRef}
+          >
+            <input type="hidden" name="MerchantCode" value="M42593" />
+            <input type="hidden" name="PaymentId" value="" />
+            <input type="hidden" name="RefNo" value="A00000001" />
+            <input type="hidden" name="Amount" value="1.00" />
+            <input type="hidden" name="Currency" value="MYR" />
+            <input type="hidden" name="ProdDesc" value="Photo Print" />
+            <input type="hidden" name="UserName" value="John Tan" />
+            <input type="hidden" name="UserEmail" value="john@hotmail.com" />
+            <input type="hidden" name="UserContact" value="0126500100" />
+            <input type="hidden" name="Remark" value="" />
+            <input type="hidden" name="Lang" value="UTF-8" />
+            <input type="hidden" name="SignatureType" value="SHA256" />
+            <input
+              type="hidden"
+              name="Signature"
+              value="598ad471ec675635dfe6fe90be16d952360768abf2a22ca48498d97d20654d9c"
+            />
+            <input
+              type="hidden"
+              name="ResponseURL"
+              value={`https://${location.host}/payment/response.asp`}
+            />
+            <input
+              type="hidden"
+              name="BackendURL"
+              value="https://www.YourBackendURL.com/payment/backend_response.asp"
+            />
+            <input type="hidden" name="Optional" value="{'carddetails':'Y'}" />
+            <input
+              type="hidden"
+              name="appdeeplink"
+              value="app://open.my.app/receipt/RefNo=A00000001"
+            />
+            <input type="hidden" name="Xfield1" value="" />
+            {/* <input type="submit" value="Proceed with Payment" name="Submit" /> */}
+          </form>
+          <iframe
+            ref={iframeRef}
+            id="my_iframe"
+            name="my_iframe"
+            src="not_submitted_yet.aspx"
+            allowFullScreen
+            className="w-full"
+            // height={height}
+            // onLoad={onLoad}
+          ></iframe>
+        </>
       )
     case "manual":
       // We only display the test payment form if we are in a development environment
