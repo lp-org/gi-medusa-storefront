@@ -190,25 +190,21 @@ const PaymentElement = ({
               <input
                 type="hidden"
                 name="ResponseURL"
-                value={`https://api.gitechnano.com/payment/confirm`}
+                value={`https://api.gitechnano.com/store/payment/confirm`}
               />
               <input
                 type="hidden"
                 name="BackendURL"
                 value={`https://api.gitechnano.com/webhook/ipay88`}
               />
-              <input
-                type="hidden"
-                name="Optional"
-                value="{'carddetails':'Y'}"
-              />
+              <input type="hidden" name="Optional" value="" />
               <input
                 type="hidden"
                 name="appdeeplink"
                 value="app://open.my.app/receipt/RefNo=A00000001"
               />
               {/* <input type="hidden" name="Xfield1" value="" /> */}
-              {/* <input type="submit" value="Proceed with Payment" name="Submit" /> */}
+              <input type="submit" value="Proceed with Payment" name="Submit" />
             </form>
           }
           <iframe
