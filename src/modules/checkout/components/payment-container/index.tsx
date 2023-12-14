@@ -128,11 +128,11 @@ const PaymentElement = ({
         formRef?.current.submit()
       }
     })()
-  }, [])
+  }, [paymentSession])
   const onLoad = () => {
     setHeight(iframeRef.current.contentWindow.document.body.scrollHeight + "px")
   }
-
+  console.log(paymentSession)
   switch (paymentSession.provider_id) {
     case "stripe":
       return (
@@ -148,7 +148,7 @@ const PaymentElement = ({
             <form
               method="post"
               name="ePayment"
-              action="https://payment.ipay88.com.my/ePayment/entry.asp"
+              action="https://payment.ipay88.com.my/epayment/entry.asp"
               target="my_iframe"
               ref={formRef}
             >
@@ -156,11 +156,33 @@ const PaymentElement = ({
               <input type="hidden" name="PaymentId" value="" />
               <input type="hidden" name="RefNo" value={paymentSession.id} />
               <input type="hidden" name="Amount" value="1.00" />
-              <input type="hidden" name="Currency" value="MYR" />
-              <input type="hidden" name="ProdDesc" value="Photo Print" />
-              <input type="hidden" name="UserName" value="John Tan" />
-              <input type="hidden" name="UserEmail" value="john@hotmail.com" />
-              <input type="hidden" name="UserContact" value="0126500100" />
+              <input
+                type="hidden"
+                name="Currency"
+                value={paymentSession?.data?.currency?.toUpperCase()}
+              />
+              <input
+                type="hidden"
+                name="ProdDesc"
+                value={paymentSession.cart_id}
+              />
+              <input
+                type="hidden"
+                name="UserName"
+                value={
+                  paymentSession?.data?.billing_address?.first_name
+                    ? paymentSession?.data?.billing_address?.first_name +
+                      " " +
+                      paymentSession?.data?.billing_address?.last_name
+                    : ""
+                }
+              />
+              <input
+                type="hidden"
+                name="UserEmail"
+                value={paymentSession?.data?.customer?.email}
+              />
+              <input type="hidden" name="UserContact" value="" />
               <input type="hidden" name="Remark" value="" />
               <input type="hidden" name="Lang" value="UTF-8" />
               <input type="hidden" name="SignatureType" value="SHA256" />
@@ -168,7 +190,7 @@ const PaymentElement = ({
               <input
                 type="hidden"
                 name="ResponseURL"
-                value={`https://${location.host}/payment/confirm`}
+                value={`https://api.gitechnano.com/payment/confirm`}
               />
               <input
                 type="hidden"
