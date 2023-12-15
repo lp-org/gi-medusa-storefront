@@ -26,6 +26,13 @@ const api = {
       return medusaRequest("GET", path)
     },
   },
+
+  iPay88: {
+    signature(payload) {
+      const path = `/payment/ipay88/signature`
+      return medusaRequest("POST", path, payload)
+    },
+  },
 }
 
 export default api

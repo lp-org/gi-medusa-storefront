@@ -1,4 +1,6 @@
+import { MEDUSA_BACKEND_URL } from "@lib/config"
 import { useCheckout } from "@lib/context/checkout-context"
+import api from "@lib/data/api"
 import { PaymentSession } from "@medusajs/medusa"
 import Button from "@modules/common/components/button"
 import Spinner from "@modules/common/icons/spinner"
@@ -6,7 +8,7 @@ import { OnApproveActions, OnApproveData } from "@paypal/paypal-js"
 import { PayPalButtons, PayPalScriptProvider } from "@paypal/react-paypal-js"
 import { useElements, useStripe } from "@stripe/react-stripe-js"
 import { useCart } from "medusa-react"
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useMemo, useState } from "react"
 import { useAppStore } from "store"
 
 type PaymentButtonProps = {
@@ -53,6 +55,10 @@ const PaymentButton: React.FC<PaymentButtonProps> = ({ paymentSession }) => {
     case "paypal":
       return (
         <PayPalPaymentButton notReady={notReady} session={paymentSession} />
+      )
+    case "ipay88":
+      return (
+        <IPay88PaymentButton notReady={notReady} session={paymentSession} />
       )
     default:
       return <Button disabled>Select a payment method</Button>
@@ -244,6 +250,120 @@ const ManualTestPaymentButton = ({ notReady }: { notReady: boolean }) => {
       >
         {submitting ? <Spinner /> : "Checkout"}
       </Button>
+      {detectSabahSarawak && (
+        <div className="text-white bg-red-400  p-4">
+          Shipping available for West Malaysia only. Unfortunately, we do not
+          deliver to Sabah and Sarawak regions.
+        </div>
+      )}
+    </>
+  )
+}
+const MERCHANT_CODE = process.env.NEXT_PUBLIC_IPAY88_MERCHANT_CODE
+const IPay88PaymentButton = ({
+  notReady,
+  session,
+}: {
+  notReady: boolean
+  session: PaymentSession
+}) => {
+  // const MERCHANT_CODE = "M42593"
+  const detectSabahSarawak = useAppStore((state) => state.detectSabahSarawak)
+  const [signature, setSignature] = useState("")
+  const [submitting, setSubmitting] = useState(false)
+
+  const { onPaymentCompleted, cart } = useCheckout()
+  const amount = useMemo(() => {
+    return session.data.is_test ? "1.00" : (cart?.total! / 100).toFixed(2)
+  }, [session, cart])
+  const handlePayment = () => {
+    setSubmitting(true)
+
+    onPaymentCompleted()
+
+    setSubmitting(false)
+  }
+
+  useEffect(() => {
+    ;(async () => {
+      setSubmitting(true)
+      const res = await api.iPay88.signature({
+        Amount: amount,
+        Currency: "MYR",
+        MerchantCode: MERCHANT_CODE,
+        RefNo: session.cart_id,
+      })
+      setSubmitting(false)
+      const sig = res.data
+      setSignature(sig)
+    })()
+  }, [amount, session.id])
+
+  return (
+    <>
+      <>
+        <form
+          method="post"
+          name="ePayment"
+          action="https://payment.ipay88.com.my/epayment/entry.asp"
+          onSubmit={() => setSubmitting(true)}
+        >
+          <input type="hidden" name="MerchantCode" value={MERCHANT_CODE} />
+          <input type="hidden" name="PaymentId" value="" />
+          <input type="hidden" name="RefNo" value={session?.cart_id!} />
+          <input type="hidden" name="Amount" value={amount} />
+          <input
+            type="hidden"
+            name="Currency"
+            value={cart?.region.currency_code.toUpperCase()}
+          />
+          <input type="hidden" name="ProdDesc" value="Checkout Cart" />
+          <input
+            type="hidden"
+            name="UserName"
+            value={
+              cart?.billing_address?.first_name
+                ? cart?.billing_address?.first_name +
+                  " " +
+                  cart?.billing_address?.last_name
+                : ""
+            }
+          />
+          <input type="hidden" name="UserEmail" value={cart?.customer?.email} />
+          <input type="hidden" name="UserContact" value="" />
+          <input type="hidden" name="Remark" value="" />
+          <input type="hidden" name="Lang" value="UTF-8" />
+          <input type="hidden" name="SignatureType" value="SHA256" />
+          <input type="hidden" name="Signature" value={signature} />
+          <input
+            type="hidden"
+            name="ResponseURL"
+            // value={`https://api.gitechnano.com/store/payment/confirm`}
+            value={`${MEDUSA_BACKEND_URL}/payment/ipay88/confirm`}
+          />
+          <input
+            type="hidden"
+            name="BackendURL"
+            value={`${MEDUSA_BACKEND_URL}/payment/ipay88/backend_response`}
+          />
+          <input type="hidden" name="Optional" value="" />
+          <input
+            type="hidden"
+            name="appdeeplink"
+            value={`app://open.my.app/receipt/RefNo=${cart?.id}`}
+          />
+          {/* <input type="hidden" name="Xfield1" value="" /> */}
+          {/* <input type="submit" value="Proceed with Payment" name="Submit" /> */}
+          <Button
+            disabled={submitting || notReady || detectSabahSarawak}
+            isLoading={submitting}
+            type="submit"
+          >
+            Proceed with Payment
+          </Button>
+        </form>
+      </>
+
       {detectSabahSarawak && (
         <div className="text-white bg-red-400  p-4">
           Shipping available for West Malaysia only. Unfortunately, we do not
