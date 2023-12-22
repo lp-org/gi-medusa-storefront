@@ -274,7 +274,7 @@ const IPay88PaymentButton = ({
 
   const { onPaymentCompleted, cart } = useCheckout()
   const amount = useMemo(() => {
-    return session.data.is_test ? "1.00" : (cart?.total! / 100).toFixed(2)
+    return (cart?.total! / 100).toFixed(2)
   }, [session, cart])
   const handlePayment = () => {
     setSubmitting(true)
