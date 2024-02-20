@@ -18,7 +18,7 @@ const FooterCTA = () => {
             />
           ) : (
             <Image
-              src={storeContent?.banner_2 || "/cta.jpg"}
+              src={storeContent?.banner_2 || "/banner2.jpg"}
               alt=""
               layout="fill"
               objectFit="cover"

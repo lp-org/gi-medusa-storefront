@@ -48,6 +48,15 @@ const Nav = () => {
         "!fixed": isHome,
       })}
     >
+      <div className="text-white bg-slate-800 text-xs p-1 text-center w-full">
+        <Link
+          href={"https://demo-admin-commerce.subscrip.store"}
+          className="cursor-pointer hover:underline"
+          target="_blank"
+        >
+          Go to Admin
+        </Link>
+      </div>
       <header
         className={clsx(
           "relative h-16 px-8 mx-auto transition-colors bg-transparent border-b border-transparent duration-200 group-hover:bg-white group-hover:border-gray-200",
